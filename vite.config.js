@@ -37,46 +37,12 @@ function seoFiles() {
   };
 }
 
-/**
- * The build uses relative URLs (base './') so one artifact runs both at a
- * domain root and under /dcnova/ on github.io. Relative URLs alone break
- * when a host serves index.html directly at a nested path, so this rewrites
- * index.html's asset tags to be resolved at runtime from the same base the
- * router detects (src/lib/paths.js). Parser-inserted via document.write so
- * the stylesheet stays render-blocking (no flash of unstyled content).
- */
-function runtimeBase() {
-  const repo = site.deploy.repoBase.toLowerCase();
-  return {
-    name: 'dcnova-runtime-base',
-    apply: 'build',
-    transformIndexHtml: {
-      order: 'post',
-      handler(html) {
-        const writes = [];
-        const out = html.replace(/<(script|link)\b[^>]*?(?:src|href)="\.\/([^"]+)"[^>]*>(?:<\/script>)?\s*/g, (tag) => {
-          const [pre, post] = tag.trim().split(/(?<==")\.\//);
-          // JSON-encode each half; escape "</" so </script> cannot end the inline script.
-          const js = (str) => JSON.stringify(str).replace(/<\//g, '<\\/');
-          writes.push(`document.write(${js(pre)}+B+${js(post)});`);
-          return '';
-        });
-        if (!writes.length) return html;
-        const loader =
-          `<script>(function(){var s=location.pathname.split('/')[1]||'';` +
-          `var B=s.toLowerCase()===${JSON.stringify(repo)}?'/'+s+'/':'/';${writes.join('')}})();</script>\n`;
-        return out.replace('</head>', `${loader}  </head>`);
-      },
-    },
-  };
-}
-
 export default defineConfig({
   // Relative asset paths: the same build works at the domain root and under
   // /dcnova/ on github.io. public/404.html always lands visitors on the
   // base index.html, so relative URLs resolve correctly on deep links.
   base: './',
-  plugins: [react(), seoFiles(), runtimeBase()],
+  plugins: [react(), seoFiles()],
   define: {
     'import.meta.env.VITE_SITE_URL': JSON.stringify(SITE_URL),
   },
