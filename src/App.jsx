@@ -23,7 +23,7 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
 function PageFallback() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center" role="status" aria-live="polite">
-      <span className="mow-loader" aria-hidden="true" />
+      <span className="nova-loader" aria-hidden="true" />
       <span className="sr-only">Loading page…</span>
     </div>
   );

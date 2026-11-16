@@ -1,140 +1,189 @@
 import { useId, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Phone, Plus } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ChevronRight, Phone, RotateCcw, ShieldCheck, Star, Sun } from 'lucide-react';
 import { site } from '@/config/site';
-import Reveal from './Reveal';
+import { useReveal } from '@/lib/hooks';
 
-/** "Plot marker" eyebrow: a number tag + label, used to open every section. */
-export function Eyebrow({ no, children, className = '' }) {
+/** The nova spark: the brand's bullet, divider and accent glyph. */
+export function Spark({ className = 'h-3.5 w-3.5 text-poppy' }) {
   return (
-    <p className={`label flex items-center gap-3 ${className}`}>
-      {no && (
-        <span className="cut px-2 py-1 font-sans text-[0.65rem] text-ink" style={{ '--c': '5px', '--edge': '#D7F25C', '--fill': '#D7F25C' }}>
-          {no}
-        </span>
-      )}
-      <span>{children}</span>
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" fill="currentColor">
+      <path d="M12 0 14.6 9.4 24 12 14.6 14.6 12 24 9.4 14.6 0 12 9.4 9.4Z" />
+    </svg>
+  );
+}
+
+export function Reveal({ as: Tag = 'div', delay = 0, className = '', children, ...rest }) {
+  const ref = useReveal();
+  return (
+    <Tag ref={ref} className={`reveal ${className}`} style={{ '--d': `${delay}ms` }} {...rest}>
+      {children}
+    </Tag>
+  );
+}
+
+export function Eyebrow({ children, className = 'text-manzanita' }) {
+  return (
+    <p className={`eyebrow ${className}`}>
+      <Spark className="h-3 w-3 text-poppy" />
+      {children}
     </p>
   );
 }
 
-/** Signature motif divider: a strip of mow stripes. */
-export function MowRule({ accent = false, className = '' }) {
-  return <div aria-hidden="true" className={`${accent ? 'mow-rule' : 'mow h-10 w-full'} ${className}`} />;
+export function SectionHead({ eyebrow, title, intro, align = 'left', className = '', titleClass = 'text-4xl sm:text-5xl lg:text-6xl', light = false, as: H = 'h2' }) {
+  return (
+    <Reveal className={`${align === 'center' ? 'mx-auto text-center' : ''} max-w-3xl ${className}`}>
+      {eyebrow && <Eyebrow className={light ? 'text-poppy' : 'text-manzanita'}>{eyebrow}</Eyebrow>}
+      <H className={`mt-4 font-extrabold ${titleClass}`}>{title}</H>
+      {intro && <p className={`mt-5 text-lg ${light ? 'text-adobe/80' : 'text-chaparral/80'} ${align === 'center' ? 'mx-auto' : ''} max-w-2xl`}>{intro}</p>}
+    </Reveal>
+  );
 }
 
-/** Owner-to-confirm marker for trust signals and other unverified content. */
-export function Placeholder({ children = 'Placeholder', title = 'Placeholder: owner to confirm before publishing' }) {
+export function Placeholder({ children = 'Placeholder', className = '' }) {
   return (
-    <span className="ph" title={title}>
+    <span className={`chip-placeholder ${className}`} title="Placeholder: owner to confirm before launch">
       {children}
     </span>
   );
 }
 
-export function ArrowLink({ to, children, className = '' }) {
+export function Breadcrumbs({ items, light = false }) {
   return (
-    <Link to={to} className={`group inline-flex items-center gap-2 text-sm font-semibold text-bone underline-offset-[6px] hover:text-clipping hover:underline ${className}`}>
-      {children}
-      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-    </Link>
+    <nav aria-label="Breadcrumb">
+      <ol className={`flex flex-wrap items-center gap-1 text-sm ${light ? 'text-adobe/75' : 'text-sage'}`}>
+        <li>
+          <Link to="/" className="hover:underline">Home</Link>
+        </li>
+        {items.map((it, i) => (
+          <li key={it.label} className="flex items-center gap-1">
+            <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+            {it.href && i < items.length - 1 ? (
+              <Link to={it.href} className="hover:underline">{it.label}</Link>
+            ) : (
+              <span aria-current="page" className={light ? 'text-adobe' : 'text-chaparral'}>{it.label}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
 }
 
-/**
- * Inner-page header. Typographic and asymmetric, matching the home hero:
- * an oversized title on the left, a short standfirst pinned bottom-right.
- */
-export function PageHero({ no, eyebrow, title, intro, children, aside }) {
-  return (
-    <header className="relative overflow-hidden border-b border-bone/10 pb-14 pt-36 sm:pb-20 sm:pt-44">
-      <div aria-hidden="true" className="mow-diag pointer-events-none absolute inset-0 opacity-60" />
-      <div className="frame relative grid gap-10 lg:grid-cols-12 lg:items-end">
-        <div className="lg:col-span-8">
-          <Eyebrow no={no} className="animate-page-in">{eyebrow}</Eyebrow>
-          <h1 className="mt-6 animate-page-in text-[2.6rem] xs:text-5xl sm:text-6xl lg:text-[5.2rem]">{title}</h1>
-        </div>
-        <div className="lg:col-span-4 lg:pb-3">
-          {intro && <p className="max-w-md text-lg text-bone-dim">{intro}</p>}
-          {aside}
-        </div>
-      </div>
-      {children}
-    </header>
-  );
-}
+const TRUST_ICONS = { insured: ShieldCheck, guarantee: RotateCcw, years: Sun, stars: Star };
 
-/** Closing call to action, shared by inner pages. */
-export function CtaBand({ title = 'Let’s walk your property.', text = 'A free, no-pressure walk-through and a written quote within two business days.' }) {
+/** Trust signals, all flagged as placeholders in site.js until the owner confirms. */
+export function TrustBar({ variant = 'strip' }) {
+  if (variant === 'stack') {
+    return (
+      <ul className="grid gap-3 sm:grid-cols-2">
+        {site.trust.map((t) => {
+          const Icon = TRUST_ICONS[t.key] || BadgeCheck;
+          return (
+            <li key={t.key} className="flex items-start gap-3 rounded-blob border-2 border-line bg-adobe p-5">
+              <Icon className="mt-0.5 h-6 w-6 shrink-0 text-manzanita" aria-hidden="true" />
+              <div>
+                <p className="font-semibold">{t.label}</p>
+                <p className="text-sm text-chaparral/70">{t.detail}</p>
+                {t.placeholder && <Placeholder className="mt-2 text-manzanita" />}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
   return (
-    <section aria-labelledby="cta-title" className="frame py-20 sm:py-28">
-      <Reveal className="card overflow-hidden" style={{ '--c': '34px' }}>
-        <div className="mow-rule" aria-hidden="true" />
-        <div className="grid gap-10 p-7 sm:p-12 lg:grid-cols-12 lg:items-end lg:p-16">
-          <div className="lg:col-span-8">
-            <Eyebrow>Free on-site quote</Eyebrow>
-            <h2 id="cta-title" className="mt-5 text-4xl sm:text-5xl lg:text-6xl">{title}</h2>
-            <p className="mt-5 max-w-xl text-bone-dim">{text}</p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:flex-col lg:items-stretch">
-            <Link to="/quote" className="btn btn-primary">
-              Request a quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <a href={site.phoneHref} className="btn btn-ghost">
-              <Phone className="h-4 w-4" aria-hidden="true" /> {site.phone}
-            </a>
-          </div>
-        </div>
-      </Reveal>
+    <section aria-label="Why homeowners trust DC Nova" className="border-y-2 border-chaparral bg-adobe-2">
+      <ul className="frame grid grid-cols-2 lg:grid-cols-4">
+        {site.trust.map((t, i) => {
+          const Icon = TRUST_ICONS[t.key] || BadgeCheck;
+          return (
+            <li key={t.key} className={`flex items-center gap-3 py-5 lg:py-6 ${i % 2 ? 'pl-4 sm:pl-6' : 'pr-4'} ${i > 0 ? 'lg:border-l-2 lg:border-chaparral/15 lg:pl-6' : ''}`}>
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-chaparral text-poppy">
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[0.95rem] font-semibold leading-tight">{t.label}</span>
+                <span className="mt-0.5 block text-xs text-chaparral/70">
+                  {t.detail}
+                  {t.placeholder && <span className="ml-1 font-semibold uppercase tracking-wider text-manzanita">· placeholder</span>}
+                </span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }
 
-/** Accessible accordion item (button + region). */
-export function AccordionItem({ q, a, defaultOpen = false }) {
+/** Closing call to action. `tone` switches between the poppy and dark versions. */
+export function CtaBand({ title = 'Let’s walk your property.', body = 'Tell us what the yard needs. We come out, measure, and send a written quote within one business day. No charge, no pressure.', tone = 'dark' }) {
+  const dark = tone === 'dark';
+  return (
+    <section className={`relative overflow-hidden ${dark ? 'on-dark bg-chaparral text-adobe' : 'bg-poppy text-chaparral'}`}>
+      <div className={`absolute inset-0 ${dark ? 'contours-light' : 'contours'}`} aria-hidden="true" />
+      <div className="frame relative grid items-center gap-10 py-20 lg:grid-cols-[1.4fr_1fr] lg:py-28">
+        <Reveal>
+          <h2 className="text-4xl font-extrabold sm:text-6xl">{title}</h2>
+          <p className={`mt-5 max-w-xl text-lg ${dark ? 'text-adobe/80' : 'text-chaparral/85'}`}>{body}</p>
+        </Reveal>
+        <Reveal delay={120} className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-start">
+          <Link to="/quote" className={dark ? 'btn-poppy' : 'btn-ink'}>
+            Get my free quote <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+          <a href={site.phoneHref} className={dark ? 'btn-line-light' : 'btn-line'}>
+            <Phone className="h-4 w-4" aria-hidden="true" /> {site.phoneDisplay}
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/** Arch-topped photo frame: the site's signature image shape. */
+export function Arch({ children, className = '' }) {
+  return <div className={`overflow-hidden rounded-arch ${className}`}>{children}</div>;
+}
+
+/** Accessible disclosure for FAQs. */
+export function AccordionItem({ q, children, defaultOpen = false, compact = false }) {
   const [open, setOpen] = useState(defaultOpen);
   const id = useId();
   return (
-    <div className="border-b border-bone/10">
-      <h3 className="font-sans text-base">
+    <div className="border-b-2 border-chaparral/15">
+      <h3 className="font-sans">
         <button
           type="button"
           aria-expanded={open}
           aria-controls={`${id}-panel`}
           id={`${id}-btn`}
           onClick={() => setOpen((o) => !o)}
-          className="group flex w-full items-start justify-between gap-6 py-5 text-left text-[1.05rem] font-semibold text-bone hover:text-clipping"
+          className={`group flex w-full items-start justify-between gap-6 text-left ${compact ? 'py-4' : 'py-6'}`}
         >
-          <span>{q}</span>
-          <Plus
+          <span className={`font-display font-bold ${compact ? 'text-lg' : 'text-xl sm:text-2xl'} leading-snug tracking-tight`}>{q}</span>
+          <span
+            className={`mt-1 grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-chaparral transition ${open ? 'rotate-45 bg-poppy' : 'group-hover:bg-adobe-2'}`}
             aria-hidden="true"
-            className={`mt-1 h-5 w-5 shrink-0 text-clipping transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
-          />
+          >
+            <svg viewBox="0 0 12 12" className="h-3 w-3"><path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="2" /></svg>
+          </span>
         </button>
       </h3>
-      <div
-        id={`${id}-panel`}
-        role="region"
-        aria-labelledby={`${id}-btn`}
-        className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
-      >
-        <div className="overflow-hidden">
-          <p className={`max-w-2xl pb-6 text-bone-dim ${open ? '' : 'invisible'}`}>{a}</p>
-        </div>
+      <div id={`${id}-panel`} role="region" aria-labelledby={`${id}-btn`} hidden={!open} className="pb-6 pr-12 text-chaparral/85">
+        {children}
       </div>
     </div>
   );
 }
 
-/** Star row for review layouts. Purely decorative when used with placeholders. */
-export function Stars({ className = '' }) {
+export function ArrowLink({ to, children, className = '' }) {
   return (
-    <span className={`flex gap-1 ${className}`} aria-hidden="true">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" className="h-4 w-4 fill-clipping">
-          <path d="M10 1.5 12.6 7l6 .6-4.5 4 1.3 5.9L10 14.6l-5.4 2.9L5.9 11.6 1.4 7.6l6-.6z" />
-        </svg>
-      ))}
-    </span>
+    <Link to={to} className={`group inline-flex items-center gap-2 font-semibold ${className}`}>
+      <span className="link-u">{children}</span>
+      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" aria-hidden="true" />
+    </Link>
   );
 }

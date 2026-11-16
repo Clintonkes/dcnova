@@ -4,192 +4,133 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 7rem;
   }
   body {
-    @apply bg-ink font-sans text-bone antialiased;
-    line-height: 1.65;
-    font-feature-settings: 'ss01', 'kern';
-    overflow-x: hidden;
+    @apply bg-adobe font-sans text-chaparral antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 {
-    @apply font-display font-normal text-bone;
+    @apply font-display;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
     line-height: 1.04;
-    letter-spacing: -0.015em;
     text-wrap: balance;
   }
   p { text-wrap: pretty; }
-  ::selection { @apply bg-clipping text-ink; }
-
-  /* Visible, high-contrast focus everywhere (outline is never clipped by
-     the ticket-cut shapes because those live on pseudo-elements). */
+  ::selection { @apply bg-poppy text-chaparral; }
   :focus-visible {
-    outline: 2px solid theme('colors.clipping');
+    outline: 3px solid theme('colors.poppy');
     outline-offset: 3px;
+    border-radius: 6px;
   }
-  :focus:not(:focus-visible) { outline: none; }
-
-  img { @apply max-w-full; }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
+  .on-dark :focus-visible { outline-color: theme('colors.poppy'); }
+  img { max-width: 100%; }
 }
 
 @layer components {
   .frame { @apply mx-auto w-full max-w-frame px-4 sm:px-6 lg:px-10; }
 
-  /* Small all-caps labels: the "plot marker" voice of the brand. */
-  .label {
-    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-label text-lichen;
+  /* Small uppercase label used above headings. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.78rem] font-semibold uppercase tracking-label;
   }
 
-  /* ── Ticket-cut shape system ─────────────────────────────────────────
-     Top-left and bottom-right corners are chamfered, like a nursery plant
-     tag. The shape is drawn on ::before (edge) and ::after (fill) so focus
-     outlines on the element itself stay fully visible. */
-  .cut, .btn, .card, .card-ink, .choice {
-    --c: 14px;
-    --edge: transparent;
-    --fill: transparent;
-    position: relative;
-    isolation: isolate;
-  }
-  :is(.cut, .btn, .card, .card-ink, .choice)::before,
-  :is(.cut, .btn, .card, .card-ink, .choice)::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    pointer-events: none;
-    clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
-    transition: background-color 0.25s ease;
-  }
-  :is(.cut, .btn, .card, .card-ink, .choice)::before { inset: 0; background: var(--edge); }
-  :is(.cut, .btn, .card, .card-ink, .choice)::after { inset: 1px; background: var(--fill); }
-
-  .cut-img {
-    --c: 22px;
-    clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
-  }
-
-  /* Perforated ticket: half-moon notches on both sides. */
-  .ticket {
-    --n: 11px;
-    -webkit-mask:
-      radial-gradient(circle var(--n) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
-      radial-gradient(circle var(--n) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
-    mask:
-      radial-gradient(circle var(--n) at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
-      radial-gradient(circle var(--n) at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
-  }
-
-  /* ── Buttons ───────────────────────────────────────────────────────── */
+  /* Buttons: pill shapes, matching the arch/organic shape language. */
   .btn {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2.5 px-6 py-3 text-sm font-semibold tracking-wide transition-colors duration-200;
-    --c: 10px;
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.98rem] font-semibold transition duration-200;
   }
-  .btn-primary { --edge: theme('colors.clipping'); --fill: theme('colors.clipping'); @apply text-ink; }
-  .btn-primary:hover { --fill: #e6ff7a; --edge: #e6ff7a; }
-  .btn-ghost { --edge: rgb(239 232 218 / 0.35); --fill: theme('colors.ink'); @apply text-bone; }
-  .btn-ghost:hover { --edge: theme('colors.clipping'); @apply text-clipping; }
-  .btn-light { --edge: theme('colors.ink'); --fill: theme('colors.ink'); @apply text-bone; }
-  .btn-light:hover { --fill: theme('colors.loam'); }
-  .btn[disabled] { @apply cursor-not-allowed opacity-60; }
+  .btn-poppy { @apply btn bg-poppy text-chaparral hover:bg-chaparral hover:text-adobe; }
+  .btn-ink { @apply btn bg-chaparral text-adobe hover:bg-poppy hover:text-chaparral; }
+  .btn-line { @apply btn border-2 border-chaparral text-chaparral hover:bg-chaparral hover:text-adobe; }
+  .btn-line-light { @apply btn border-2 border-adobe/70 text-adobe hover:border-poppy hover:bg-poppy hover:text-chaparral; }
 
-  .card {
-    --c: 18px;
-    --edge: rgb(239 232 218 / 0.12);
-    --fill: theme('colors.loam');
+  .link-u {
+    @apply underline decoration-poppy decoration-2 underline-offset-4 transition hover:decoration-chaparral;
   }
-  .card-ink { --c: 18px; --edge: rgb(239 232 218 / 0.12); --fill: theme('colors.ink-2'); }
-  a.card:hover, a.card-ink:hover, .card-hover:hover { --edge: theme('colors.clipping'); }
 
-  /* ── Signature motif: mow stripes ──────────────────────────────────────
-     Alternating bands, like a freshly cut lawn seen from above. */
-  .mow {
-    background-image: repeating-linear-gradient(90deg, rgb(239 232 218 / 0.09) 0 22px, rgb(239 232 218 / 0.025) 22px 44px);
-  }
-  .mow-accent {
-    background-image: repeating-linear-gradient(90deg, theme('colors.clipping') 0 22px, #b9d43e 22px 44px);
-  }
-  .mow-diag {
-    background-image: repeating-linear-gradient(115deg, rgb(239 232 218 / 0.06) 0 34px, transparent 34px 68px);
-  }
-  .mow-rule { @apply block h-2 w-full; background-image: repeating-linear-gradient(90deg, theme('colors.clipping') 0 22px, #b9d43e 22px 44px); }
-
-  .mow-loader {
-    @apply block h-1.5 w-28;
-    background-image: repeating-linear-gradient(90deg, theme('colors.clipping') 0 22px, #b9d43e 22px 44px);
-    animation: mowload 1s linear infinite;
-    background-size: 44px 100%;
-  }
-  @keyframes mowload { to { background-position: 44px 0; } }
-
-  /* ── Forms ─────────────────────────────────────────────────────────── */
-  .field-label { @apply mb-2 block text-sm font-semibold text-bone; }
+  /* Form fields */
+  .field-label { @apply mb-1.5 block text-sm font-semibold; }
   .field {
-    @apply block w-full rounded-none border-0 border-b border-bone/30 bg-transparent px-0 py-3 text-base text-bone placeholder:text-lichen/70 transition-colors;
+    @apply block w-full rounded-2xl border-2 border-line bg-adobe px-4 py-3 text-chaparral placeholder:text-sage/80 transition;
+    min-height: 48px;
   }
-  .field:hover { @apply border-bone/60; }
-  .field:focus { @apply border-clipping outline-none; box-shadow: 0 1px 0 0 theme('colors.clipping'); }
-  .field[aria-invalid='true'] { @apply border-danger; }
-  .field-box {
-    @apply block w-full border border-bone/20 bg-ink-2 px-4 py-3 text-base text-bone placeholder:text-lichen/70 transition-colors;
-  }
-  .field-box:hover { @apply border-bone/40; }
-  .field-box:focus { @apply border-clipping outline-none; }
-  .field-box[aria-invalid='true'] { @apply border-danger; }
-  .field-error { @apply mt-2 flex items-center gap-1.5 text-sm text-danger; }
-  select.field, select.field-box { @apply appearance-none bg-no-repeat pr-10; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23A7AE94' stroke-width='1.6'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E"); background-position: right 0.75rem center; }
-  select option { @apply bg-ink text-bone; }
+  .field:hover { @apply border-sage; }
+  .field:focus { @apply border-chaparral outline-none ring-4 ring-poppy/30; }
+  .field[aria-invalid='true'] { @apply border-alert; }
+  .field-error { @apply mt-1.5 flex items-center gap-1.5 text-sm font-medium text-alert; }
 
-  /* Choice tiles used by the quote wizard. */
-  .choice {
-    @apply flex cursor-pointer items-start gap-3 p-4 text-left text-sm transition-colors;
-    --c: 10px;
-    --edge: rgb(239 232 218 / 0.18);
-    --fill: theme('colors.ink-2');
+  .chip-placeholder {
+    @apply inline-flex items-center gap-1 rounded-full border border-dashed border-current px-2 py-0.5 text-[0.68rem] font-semibold uppercase tracking-wider opacity-80;
   }
-  .choice:hover { --edge: rgb(239 232 218 / 0.45); }
-  .choice:has(input:checked) { --edge: theme('colors.clipping'); --fill: #1f2414; }
-  .choice:has(input:focus-visible) { outline: 2px solid theme('colors.clipping'); outline-offset: 3px; }
 
-  /* Long-form article typography (blog, privacy, terms). */
-  .prose-bdm { @apply max-w-[68ch] text-[1.06rem] leading-[1.8] text-bone-dim; }
-  .prose-bdm h2 { @apply mb-4 mt-14 text-3xl text-bone sm:text-[2.1rem]; }
-  .prose-bdm h3 { @apply mb-3 mt-10 font-sans text-lg font-semibold text-bone; }
-  .prose-bdm p { @apply mb-5; }
-  .prose-bdm ul { @apply mb-6 space-y-2.5 pl-0; }
-  .prose-bdm ul li { @apply relative pl-7; }
-  .prose-bdm ul li::before { content: ''; @apply absolute left-0 top-[0.7em] h-[3px] w-4 bg-clipping; }
-  .prose-bdm ol { @apply mb-6 list-decimal space-y-2.5 pl-6 marker:font-semibold marker:text-clipping; }
-  .prose-bdm a { @apply text-clipping underline decoration-clipping/40 underline-offset-4 hover:decoration-clipping; }
-  .prose-bdm strong { @apply font-semibold text-bone; }
-  .prose-bdm table { @apply my-8 w-full border-collapse text-left text-sm; }
-  .prose-bdm th { @apply border-b border-bone/25 py-3 pr-4 font-semibold text-bone; }
-  .prose-bdm td { @apply border-b border-bone/10 py-3 pr-4 align-top; }
-  .prose-bdm blockquote { @apply my-8 border-l-2 border-clipping pl-6 font-display text-2xl leading-snug text-bone; }
-
-  /* Placeholder marker for owner-to-confirm content. */
-  .ph {
-    @apply inline-flex items-center gap-1 border border-dashed border-clipping/60 px-1.5 py-0.5 font-sans text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-clipping;
+  /* Article typography for blog posts and legal pages. */
+  .prose-nova { @apply max-w-prose text-[1.075rem] leading-[1.75]; }
+  .prose-nova > * + * { @apply mt-5; }
+  .prose-nova h2 { @apply mt-12 text-3xl font-bold; }
+  .prose-nova h3 { @apply mt-8 text-xl font-bold; }
+  .prose-nova ul { @apply space-y-2 pl-0; }
+  .prose-nova ul > li { @apply relative pl-7; }
+  .prose-nova ul > li::before {
+    content: '';
+    @apply absolute left-0 top-[0.55em] h-3 w-3 bg-poppy;
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
   }
+  .prose-nova ol { @apply list-decimal space-y-2 pl-6 marker:font-bold marker:text-manzanita; }
+  .prose-nova a { @apply link-u; }
+  .prose-nova strong { @apply font-semibold; }
+  .prose-nova table { @apply w-full border-collapse text-left text-base; }
+  .prose-nova th { @apply border-b-2 border-chaparral py-2 pr-4 font-semibold; }
+  .prose-nova td { @apply border-b border-line py-2 pr-4 align-top; }
 }
 
 @layer utilities {
-  /* Scroll-reveal. Content stays visible without JS or with reduced motion. */
-  .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); transition-delay: var(--d, 0ms); }
-  .js .reveal.is-in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce), print {
-    .js .reveal { opacity: 1; transform: none; }
+  /* Signature motif: topographic contour lines, after the hills around Ramona. */
+  .contours {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='240' viewBox='0 0 480 240' fill='none' stroke='%2316211B' stroke-opacity='.13' stroke-width='1.2'%3E%3Cpath d='M0 200c60-30 110-60 170-50s90 50 150 40 110-60 160-70'/%3E%3Cpath d='M0 170c60-30 110-62 170-52s90 46 150 36 110-58 160-66'/%3E%3Cpath d='M0 140c55-32 115-64 175-54s85 40 145 30 110-56 160-62'/%3E%3Cpath d='M0 110c55-30 115-62 175-52s85 34 145 24 110-52 160-56'/%3E%3Cpath d='M0 80c55-28 120-58 180-48s80 28 140 18 110-48 160-50'/%3E%3Cpath d='M0 50c60-26 120-52 180-42s80 22 140 12 110-42 160-44'/%3E%3Cpath d='M0 20c60-22 120-46 180-36s80 16 140 6 110-36 160-38'/%3E%3Cpath d='M0 230c60-30 110-58 170-48s90 54 150 44 110-62 160-74'/%3E%3C/svg%3E");
+    background-size: 480px 240px;
   }
-  .text-outline { -webkit-text-stroke: 1px theme('colors.bone'); color: transparent; }
-  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .contours-light {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='240' viewBox='0 0 480 240' fill='none' stroke='%23F1E9DB' stroke-opacity='.1' stroke-width='1.2'%3E%3Cpath d='M0 200c60-30 110-60 170-50s90 50 150 40 110-60 160-70'/%3E%3Cpath d='M0 170c60-30 110-62 170-52s90 46 150 36 110-58 160-66'/%3E%3Cpath d='M0 140c55-32 115-64 175-54s85 40 145 30 110-56 160-62'/%3E%3Cpath d='M0 110c55-30 115-62 175-52s85 34 145 24 110-52 160-56'/%3E%3Cpath d='M0 80c55-28 120-58 180-48s80 28 140 18 110-48 160-50'/%3E%3Cpath d='M0 50c60-26 120-52 180-42s80 22 140 12 110-42 160-44'/%3E%3Cpath d='M0 20c60-22 120-46 180-36s80 16 140 6 110-36 160-38'/%3E%3Cpath d='M0 230c60-30 110-58 170-48s90 54 150 44 110-62 160-74'/%3E%3C/svg%3E");
+    background-size: 480px 240px;
+  }
+  .grain {
+    background-image: radial-gradient(theme('colors.chaparral / 6%') 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+  .clip-spark { clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+/* Scroll reveal. Only hides content when JS is running, so no-JS still shows it. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* Page loader: a rotating nova spark. */
+.nova-loader {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: theme('colors.poppy');
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: spin 1.4s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
 }

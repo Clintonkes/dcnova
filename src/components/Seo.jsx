@@ -3,10 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { site } from '@/config/site';
 import { absoluteUrl, SITE_URL } from '@/lib/paths';
 
+const DAY = { Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday', Fr: 'Friday', Sa: 'Saturday', Su: 'Sunday' };
+
 /** Per-page title, description, canonical, Open Graph and optional JSON-LD. */
 export default function Seo({ title, description, image, type = 'website', jsonLd, noindex = false }) {
   const { pathname } = useLocation();
-  const fullTitle = title ? `${title} | ${site.shortName}` : `${site.shortName} | Lawn Care & Landscaping in Lucasville, OH`;
+  const fullTitle = title ? `${title} | ${site.shortName}` : `${site.shortName} | Lawn Care in Ramona, CA`;
   const url = absoluteUrl(pathname);
   const ogImage = image || `${SITE_URL}/og-image.png`;
   return (
@@ -36,7 +38,7 @@ export function LocalBusinessSchema() {
   const { address: a } = site;
   const data = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    '@type': ['LocalBusiness', 'LandscapingBusiness'],
     '@id': `${SITE_URL}/#business`,
     name: site.name,
     description: site.description,
@@ -55,15 +57,16 @@ export function LocalBusinessSchema() {
       addressCountry: a.country,
     },
     geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
-    areaServed: site.serviceArea.map((s) => ({ '@type': 'City', name: `${s.name}, OH` })),
+    areaServed: site.serviceArea.map((s) => ({ '@type': 'Place', name: `${s.name.replace(/ \(.*\)$/, '')}, CA` })),
     openingHoursSpecification: site.hours
       .filter((h) => h.open)
       .map((h) => ({
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: h.days.map((d) => ({ Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday', Fr: 'Friday', Sa: 'Saturday', Su: 'Sunday' })[d]),
+        dayOfWeek: h.days.map((d) => DAY[d]),
         opens: h.open,
         closes: h.close,
       })),
+    sameAs: site.social.filter((s) => !s.placeholder).map((s) => s.href),
   };
   return (
     <Helmet>

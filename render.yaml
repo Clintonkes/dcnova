@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: bdm-luxe-backend
+    name: dcnova-backend
     runtime: docker
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health

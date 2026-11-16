@@ -1,7 +1,7 @@
 import { site } from '@/config/site';
 
 /**
- * The same build is served from https://<user>.github.io/BDM_Luxe/ and from a
+ * The same build is served from https://<user>.github.io/dcnova/ and from a
  * custom domain root, so the router basename is worked out at runtime from the
  * first path segment rather than baked in at build time.
  */

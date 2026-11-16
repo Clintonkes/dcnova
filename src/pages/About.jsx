@@ -1,115 +1,138 @@
-import { Award, FileCheck2, ShieldCheck, Sprout } from 'lucide-react';
-import { site } from '@/config/site';
-import { credentials, values } from '@/data/content';
-import { pexels } from '@/lib/img';
+import { BadgeCheck, MapPin } from 'lucide-react';
 import Seo from '@/components/Seo';
 import Img from '@/components/Img';
-import Reveal from '@/components/Reveal';
-import { CtaBand, Eyebrow, PageHero, Placeholder } from '@/components/ui';
-
-const credIcons = [FileCheck2, ShieldCheck, Sprout, Award];
+import { Mark } from '@/components/Logo';
+import { Arch, Breadcrumbs, CtaBand, Eyebrow, Placeholder, Reveal, SectionHead, Spark, TrustBar } from '@/components/ui';
+import { site } from '@/config/site';
+import { credentials, team, values } from '@/data/content';
+import { pexels } from '@/lib/img';
 
 export default function About() {
   return (
     <>
       <Seo
-        title="About Us: Owner-Operated in Lucasville, OH"
-        description="BDM Luxe is an owner-operated lawn and landscape company based in Lucasville, Ohio. Our story, the standards we work to, and our credentials."
-      />
-      <PageHero
-        no="A"
-        eyebrow="About the atelier"
-        title={
-          <>
-            A small crew with <span className="italic text-clipping">particular</span> habits.
-          </>
-        }
-        intro="BDM Luxe started with a simple belief: a lawn looks expensive because of the details, not the square footage."
+        title="About"
+        description="DC Nova LLC is a Ramona, California lawn care company built around water-wise care and fire-season readiness. Meet the team and see our credentials."
       />
 
-      {/* Story: editorial two-column with drop cap and pull image */}
-      <section aria-labelledby="story-title" className="frame grid gap-14 py-20 sm:py-28 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <Reveal className="lg:sticky lg:top-32">
-            <Img
-              src={pexels(4920288)}
-              alt="Groundskeeper with a string trimmer smiling beside a neat row of arborvitae"
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="cut-img aspect-[4/5] w-full"
-            />
-            <p className="mt-3 text-xs text-lichen">Representative photography.</p>
-          </Reveal>
-        </div>
-        <div className="lg:col-span-6 lg:col-start-7">
-          <Eyebrow no="01">Our story</Eyebrow>
-          <h2 id="story-title" className="mt-5 text-4xl sm:text-5xl">Built in Lucasville, one route at a time.</h2>
-          <div className="prose-bdm mt-8">
-            <p className="first-letter:float-left first-letter:mr-3 first-letter:font-display first-letter:text-7xl first-letter:leading-[0.8] first-letter:text-clipping">
-              BDM Luxe is owner-operated, and that is the point. The person who walks your property for the quote is the
-              person who sets the route, checks the edges and answers the phone. Nothing gets lost between a salesperson
-              and a crew.
-            </p>
-            <p>
-              We work across Scioto County: heavy clay soil, humid summers, a long leaf season and winters that heave
-              anything built carelessly. Everything we do is shaped by that ground: mowing heights that change with the
-              months, plants chosen for wet feet, paver bases dug deeper than the job seems to need.
-            </p>
-            <p>
-              The name says “luxe”, but it isn’t about price. It is about the finish: the spade-cut edge, the clippings
-              blown off the drive, the gate latched behind us. Small, repeated things that make a property look kept.
-            </p>
-            <p className="flex flex-wrap items-center gap-2 text-sm">
-              <Placeholder>Owner to add founding year & personal story</Placeholder>
+      {/* Story: typographic opener over a full-width landscape */}
+      <section className="frame pb-12 pt-10 lg:pt-14">
+        <Breadcrumbs items={[{ label: 'About' }]} />
+        <div className="mt-10 grid gap-10 lg:grid-cols-12">
+          <h1 className="text-[clamp(2.6rem,7vw,5.8rem)] font-extrabold leading-[0.95] lg:col-span-8">
+            A lawn care company that grew up under the <span className="text-manzanita">Ramona</span> sun.
+          </h1>
+          <div className="self-end lg:col-span-4">
+            <p className="text-lg text-chaparral/80">
+              DC Nova LLC is based on San Vicente Road and works the backcountry from Ramona to Julian. We started with one mower and a simple idea: lawn care up here should respect the water, the heat and the fire season.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Values: bone band, numbered grid */}
-      <section aria-labelledby="values-title" className="bg-bone py-20 text-ink sm:py-28">
+      <section className="frame">
+        <Reveal className="overflow-hidden rounded-[2.5rem] border-2 border-chaparral">
+          <Img src={pexels(4088333)} alt="A lone oak on a golden hillside with the morning sun rising behind it" sizes="100vw" className="aspect-[16/9] w-full sm:aspect-[21/9]" priority />
+        </Reveal>
+      </section>
+
+      <section className="frame grid gap-12 py-20 lg:grid-cols-12 lg:py-28">
+        <div className="lg:col-span-4">
+          <Eyebrow>Our story</Eyebrow>
+          <p className="mt-6 font-display text-3xl font-bold leading-tight">
+            “The best compliment a yard can get is that nobody notices how little water it uses.”
+          </p>
+          <p className="mt-4 text-sm text-sage">Founder’s note <Placeholder className="ml-1 text-manzanita">Owner to confirm wording</Placeholder></p>
+        </div>
+        <div className="space-y-5 text-lg leading-relaxed text-chaparral/85 lg:col-span-7 lg:col-start-6">
+          <p>
+            Ramona is not the coast. Summer afternoons sit in the 90s, winter nights drop near freezing, and every fall the Santa Ana winds come down the canyons. Lawns here need a different playbook from the ones on most maintenance company checklists.
+          </p>
+          <p>
+            So we built ours around three things. <strong className="text-chaparral">Water:</strong> every property gets an irrigation check, because the cheapest gallon is the one that never runs into the gutter. <strong className="text-chaparral">Soil:</strong> clay and decomposed granite pack down, so we aerate and feed to help water soak in. <strong className="text-chaparral">Fire:</strong> we treat defensible space as part of regular care, not an emergency in June.
+          </p>
+          <p>
+            We keep routes tight and local, so the same crew sees your yard every week. And we tell you what we saw. A short note after each visit costs us a minute and saves you from surprises.
+          </p>
+          <p className="flex items-center gap-2 text-base text-chaparral/70">
+            <MapPin className="h-4 w-4 text-manzanita" aria-hidden="true" /> {site.address.street}, {site.address.city}, {site.address.region} {site.address.postal}
+          </p>
+        </div>
+      </section>
+
+      {/* Values: numbered index cards */}
+      <section className="bg-adobe-2 py-20 lg:py-28" aria-labelledby="values-h">
         <div className="frame">
-          <p className="label !text-loam">02 · What we hold to</p>
-          <h2 id="values-title" className="mt-5 max-w-2xl text-4xl !text-ink sm:text-5xl">Four habits we don’t compromise on.</h2>
-          <ul className="mt-14 grid gap-px bg-ink/15 sm:grid-cols-2 lg:grid-cols-4">
+          <SectionHead eyebrow="What we hold to" title={<span id="values-h">Four rules for every property</span>} />
+          <ol className="mt-14 grid gap-5 md:grid-cols-2">
             {values.map((v, i) => (
-              <Reveal as="li" key={v.title} delay={i * 80} className="flex flex-col bg-bone p-7">
-                <span className="mow-accent block h-1.5 w-12" aria-hidden="true" />
-                <h3 className="mt-8 font-display text-2xl !text-ink">{v.title}</h3>
-                <p className="mt-3 text-[0.95rem] text-loam">{v.text}</p>
+              <Reveal as="li" key={v.title} delay={i * 80} className="relative overflow-hidden rounded-blob border-2 border-chaparral bg-adobe p-8 sm:p-10">
+                <span className="absolute -right-3 -top-6 font-display text-[7rem] font-extrabold leading-none text-adobe-3" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <h3 className="relative text-3xl font-bold">{v.title}</h3>
+                <p className="relative mt-4 max-w-md text-chaparral/80">{v.body}</p>
               </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Team */}
+      <section className="frame py-20 lg:py-28" aria-labelledby="team-h">
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <SectionHead eyebrow="The crew" title={<span id="team-h">People you’ll see on your property</span>} />
+          <Placeholder className="text-manzanita">Names, bios and photos: owner to supply</Placeholder>
+        </div>
+        <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {team.map((m, i) => (
+            <Reveal as="li" key={m.role} delay={i * 90}>
+              <Arch className="relative grid aspect-[4/5] place-items-center border-2 border-chaparral bg-adobe-2">
+                <div className="contours absolute inset-0" aria-hidden="true" />
+                <Mark className="relative h-24 w-24 text-chaparral" />
+                <span className="sr-only">Portrait placeholder</span>
+              </Arch>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-label text-manzanita">{m.role}</p>
+              <h3 className="mt-1 text-2xl font-bold">{m.name}</h3>
+              <p className="mt-2 text-chaparral/75">{m.bio}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+
+      {/* Credentials */}
+      <section className="on-dark bg-chaparral py-20 text-adobe lg:py-28" aria-labelledby="cred-h">
+        <div className="frame grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHead light eyebrow="Credentials" title={<span id="cred-h">Paperwork, in the open</span>} titleClass="text-4xl sm:text-5xl" />
+            <p className="mt-5 text-adobe/75">
+              Ask for any certificate before we start. Each item below is marked as a placeholder until the owner confirms the policy or license details.
+            </p>
+          </div>
+          <ul className="divide-y divide-adobe/15 border-y border-adobe/15 lg:col-span-8">
+            {credentials.map((c) => (
+              <li key={c.title} className="grid gap-2 py-6 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-6">
+                <BadgeCheck className="h-6 w-6 text-poppy" aria-hidden="true" />
+                <div>
+                  <h3 className="font-sans text-lg font-semibold">{c.title}</h3>
+                  <p className="text-adobe/70">{c.detail}</p>
+                </div>
+                <span className="chip-placeholder w-fit text-poppy">{c.status}</span>
+              </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Credentials */}
-      <section aria-labelledby="cred-title" className="border-y border-bone/10 bg-ink-2 py-20 sm:py-28">
-        <div className="frame grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Eyebrow no="03">Credentials</Eyebrow>
-            <h2 id="cred-title" className="mt-5 text-4xl sm:text-5xl">On paper, too.</h2>
-            <p className="mt-6 text-bone-dim">
-              We only list credentials we can show you. Items marked as placeholders are awaiting the owner’s confirmation.
-            </p>
-          </div>
-          <dl className="grid gap-px bg-bone/10 sm:grid-cols-2 lg:col-span-8">
-            {credentials.map((c, i) => {
-              const Icon = credIcons[i % credIcons.length];
-              return (
-                <Reveal key={c.title} delay={i * 70} className="bg-ink-2 p-7">
-                  <Icon className="h-6 w-6 text-clipping" aria-hidden="true" />
-                  <dt className="mt-5 flex flex-wrap items-center gap-2 font-semibold text-bone">
-                    {c.title} {c.placeholder && <Placeholder />}
-                  </dt>
-                  <dd className="mt-2 text-sm text-bone-dim">{c.text}</dd>
-                </Reveal>
-              );
-            })}
-          </dl>
+      <section className="frame py-16">
+        <div className="mb-6 flex items-center gap-3">
+          <Spark />
+          <p className="font-semibold">Trust signals</p>
         </div>
+        <TrustBar variant="stack" />
       </section>
 
-      <CtaBand title="Meet us on your ground." text={`Call ${site.phone} or request a walk-through. The owner comes out personally.`} />
+      <CtaBand tone="poppy" title="Come meet us in your yard." />
     </>
   );
 }

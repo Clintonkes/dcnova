@@ -1,50 +1,57 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Home, Phone } from 'lucide-react';
-import { site } from '@/config/site';
+import { ArrowRight, Home } from 'lucide-react';
 import Seo from '@/components/Seo';
+import { Spark } from '@/components/ui';
 
-const suggestions = [
+const links = [
   { label: 'Services', href: '/services' },
-  { label: 'Request a quote', href: '/quote' },
-  { label: 'Gallery', href: '/gallery' },
-  { label: 'FAQ', href: '/faq' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Service areas', href: '/service-areas' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export default function NotFound() {
   return (
     <>
-      <Seo title="Page not found" description="This page has gone to seed. Head back to the BDM Luxe homepage or request a quote." noindex />
-      <section className="relative flex min-h-[92vh] items-center overflow-hidden pb-20 pt-36">
-        {/* The mow-stripe motif, with one stripe left uncut. */}
-        <div aria-hidden="true" className="absolute inset-0 flex">
-          {Array.from({ length: 14 }).map((_, i) => (
-            <div key={i} className={`flex-1 ${i === 9 ? 'bg-gradient-to-b from-clipping/25 via-clipping/10 to-transparent' : i % 2 ? 'bg-bone/[0.035]' : 'bg-bone/[0.015]'}`} />
-          ))}
-        </div>
-        <div className="frame relative">
-          <p className="label">Error 404 · Plot not found</p>
-          <h1 className="mt-6 text-[5.5rem] leading-[0.85] sm:text-[9rem] lg:text-[13rem]">
-            4<span className="italic text-clipping">0</span>4
-          </h1>
-          <p className="mt-8 max-w-lg font-display text-3xl leading-snug sm:text-4xl">We missed a stripe. This page has gone to seed.</p>
-          <p className="mt-4 max-w-md text-bone-dim">The link may be old or mistyped. Here’s where most people were heading:</p>
-          <ul className="mt-8 flex flex-wrap gap-2">
-            {suggestions.map((s) => (
-              <li key={s.href}>
-                <Link to={s.href} className="inline-flex items-center gap-1.5 rounded-full border border-bone/20 px-4 py-2 text-sm font-semibold text-bone hover:border-clipping hover:text-clipping">
-                  {s.label} <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-10 flex flex-col gap-3 xs:flex-row">
-            <Link to="/" className="btn btn-primary">
-              <Home className="h-4 w-4" aria-hidden="true" /> Back to home
-            </Link>
-            <a href={site.phoneHref} className="btn btn-ghost">
-              <Phone className="h-4 w-4" aria-hidden="true" /> {site.phone}
-            </a>
+      <Seo title="Page Not Found" description="That page wandered off the route. Head back to DC Nova lawn care in Ramona, CA." noindex />
+      <section className="relative overflow-hidden">
+        <div className="contours absolute inset-0" aria-hidden="true" />
+        <div className="frame relative grid min-h-[70vh] items-center gap-10 py-16 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow text-manzanita"><Spark className="h-3 w-3 text-poppy" /> Error 404</p>
+            <h1 className="mt-5 text-[clamp(2.8rem,8vw,6rem)] font-extrabold leading-[0.92]">This patch hasn’t been planted.</h1>
+            <p className="mt-6 max-w-md text-lg text-chaparral/80">
+              The page you’re after has moved or never existed. Try one of these instead, or head home.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link to="/" className="btn-ink">
+                <Home className="h-4 w-4" aria-hidden="true" /> Back to home
+              </Link>
+              <Link to="/quote" className="btn-line">Get a quote</Link>
+            </div>
+            <ul className="mt-10 flex flex-wrap gap-2">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <Link to={l.href} className="inline-flex items-center gap-1.5 rounded-full border-2 border-chaparral/25 px-4 py-2 text-sm font-semibold hover:border-chaparral">
+                    {l.label} <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
+          {/* Illustration: bare-soil "404" with a single sprout */}
+          <svg viewBox="0 0 400 300" className="mx-auto w-full max-w-lg" role="img" aria-label="Illustration of the number 404 drawn as soil mounds with a small sprout">
+            <ellipse cx="200" cy="262" rx="190" ry="18" fill="#DCCEB4" />
+            <text x="200" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#16211B" letterSpacing="-8">0</text>
+            <text x="58" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#7A2E1D" letterSpacing="-8">4</text>
+            <text x="342" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#7A2E1D" letterSpacing="-8">4</text>
+            <g transform="translate(200 72)">
+              <path d="M0 40V0" stroke="#5D6B52" strokeWidth="5" strokeLinecap="round" />
+              <path d="M0 14C-4 0-18-6-30-2c4 12 18 18 30 2Z" fill="#5D6B52" />
+              <path d="M0 6C4-8 18-14 30-10c-4 12-18 18-30 4Z" fill="#5D6B52" />
+            </g>
+            <path d="M200 12 204 26 218 30 204 34 200 48 196 34 182 30 196 26Z" fill="#F25C1E" />
+          </svg>
         </div>
       </section>
     </>

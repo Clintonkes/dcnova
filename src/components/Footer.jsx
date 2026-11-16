@@ -1,58 +1,51 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Clock, Facebook, Instagram, Mail, MapPin, Phone, Store } from 'lucide-react';
+import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import { site } from '@/config/site';
-import { routerBasename } from '@/lib/paths';
-import { LogoMark } from './Logo';
-
-const socialIcon = { Facebook, Instagram, 'Google Business Profile': Store };
+import Logo from './Logo';
+import { Placeholder, Spark } from './ui';
 
 export default function Footer() {
-  const year = new Date().getFullYear();
   const a = site.address;
+  const year = new Date().getFullYear();
   return (
-    <footer className="relative mt-10 border-t border-bone/10 bg-ink-2 pb-28 lg:pb-10" aria-labelledby="footer-heading">
-      <h2 id="footer-heading" className="sr-only">
-        Site footer
-      </h2>
-      <div className="mow-rule" aria-hidden="true" />
+    <footer className="on-dark relative overflow-hidden bg-chaparral text-adobe">
+      {/* Ridge line: the contour motif at the top of the footer */}
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" className="block h-12 w-full text-adobe sm:h-16" aria-hidden="true">
+        <path d="M0 0h1440v34c-120 26-240 40-380 22S820 2 680 12 420 64 280 62 80 30 0 40Z" fill="currentColor" />
+        <path d="M0 52c80-10 200 18 300 18s240-46 380-52 260 40 380 46 260-12 380-30" fill="none" stroke="#F25C1E" strokeWidth="2" />
+      </svg>
 
-      <div className="frame grid gap-12 pt-16 lg:grid-cols-12 lg:pt-20">
-        {/* Brand + contact */}
-        <div className="lg:col-span-5">
-          <div className="flex items-center gap-4">
-            <LogoMark className="h-14 w-14 text-clipping" />
-            <div>
-              <p className="font-display text-3xl leading-none">BDM Luxe</p>
-              <p className="label mt-2">{site.tagline}</p>
-            </div>
-          </div>
-          <p className="mt-6 max-w-sm text-bone-dim">{site.promise} Owner-operated in Lucasville, serving Scioto County and its neighbours.</p>
-
-          <address className="mt-8 space-y-3 not-italic">
-            <a href={site.phoneHref} className="flex items-center gap-3 text-lg font-semibold text-bone hover:text-clipping">
-              <Phone className="h-5 w-5 text-clipping" aria-hidden="true" /> {site.phone}
-            </a>
-            <a href={site.emailHref} className="flex items-center gap-3 text-bone hover:text-clipping">
-              <Mail className="h-5 w-5 text-clipping" aria-hidden="true" /> {site.email}
-            </a>
-            <p className="flex items-start gap-3 text-bone-dim">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-clipping" aria-hidden="true" />
-              <span>
-                {a.street}, {a.city}, {a.region} {a.postal}
-              </span>
-            </p>
-          </address>
+      <div className="frame relative grid gap-12 pb-10 pt-10 lg:grid-cols-12 lg:pt-14">
+        <div className="lg:col-span-4">
+          <Logo light />
+          <p className="mt-6 max-w-sm text-adobe/75">{site.description}</p>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label="Social profiles">
+            {site.social.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 rounded-full border border-adobe/25 px-3 py-1.5 text-sm hover:border-poppy hover:text-poppy"
+                >
+                  {s.label}
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span className="sr-only">(opens in a new tab{s.placeholder ? ', placeholder link' : ''})</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-adobe/75">Social links are placeholders until profiles are live.</p>
         </div>
 
-        {/* Sitemap */}
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-4">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
           {site.footerNav.map((col) => (
             <div key={col.heading}>
-              <p className="label">{col.heading}</p>
+              <h2 className="font-sans text-xs font-semibold uppercase tracking-label text-poppy">{col.heading}</h2>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link to={l.href} className="text-sm text-bone-dim hover:text-clipping">
+                    <Link to={l.href} className="text-adobe/85 hover:text-poppy hover:underline">
                       {l.label}
                     </Link>
                   </li>
@@ -62,60 +55,47 @@ export default function Footer() {
           ))}
         </nav>
 
-        {/* Hours */}
-        <div className="lg:col-span-3">
-          <p className="label flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5" aria-hidden="true" /> Office hours
+        <div className="space-y-5 lg:col-span-3">
+          <h2 className="font-sans text-xs font-semibold uppercase tracking-label text-poppy">Reach us</h2>
+          <a href={site.phoneHref} className="flex items-center gap-3 font-display text-2xl font-bold hover:text-poppy">
+            <Phone className="h-5 w-5" aria-hidden="true" /> {site.phoneDisplay}
+          </a>
+          <a href={site.emailHref} className="flex items-center gap-3 break-all hover:text-poppy">
+            <Mail className="h-5 w-5 shrink-0" aria-hidden="true" /> {site.email}
+          </a>
+          <p className="flex gap-3">
+            <MapPin className="mt-1 h-5 w-5 shrink-0" aria-hidden="true" />
+            <span>
+              {a.street}
+              <br />
+              {a.city}, {a.region} {a.postal}
+            </span>
           </p>
-          <dl className="mt-4 space-y-2 text-sm">
-            {site.hours.map((h) => (
-              <div key={h.label} className="flex justify-between gap-4 border-b border-dashed border-bone/10 pb-2">
-                <dt className="text-bone-dim">{h.label}</dt>
-                <dd className={h.open ? 'text-bone' : 'text-lichen'}>{h.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <Link to="/quote" className="btn btn-primary mt-8 w-full">
-            Request a quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          <div className="flex gap-3">
+            <Clock className="mt-1 h-5 w-5 shrink-0" aria-hidden="true" />
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+              {site.hours.map((h) => (
+                <div key={h.label} className="contents">
+                  <dt className="text-adobe/70">{h.short}</dt>
+                  <dd>{h.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          {site.hoursPlaceholder && <Placeholder className="text-poppy">Hours: placeholder</Placeholder>}
         </div>
       </div>
 
-      <div className="frame mt-16 flex flex-col gap-6 border-t border-bone/10 pt-8 text-xs text-lichen md:flex-row md:items-center md:justify-between">
+      <div className="frame relative flex flex-col gap-3 border-t border-adobe/15 py-6 text-sm text-adobe/70 sm:flex-row sm:items-center sm:justify-between">
         <p>
-          © {year} {site.legalName}. All rights reserved.
+          © {year} {site.legalName}. {a.city}, {a.county}, California.
         </p>
-        <ul className="flex items-center gap-2" aria-label="Social media">
-          {site.social.map((s) => {
-            const Icon = socialIcon[s.label] ?? Store;
-            return (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-bone/15 text-bone-dim hover:border-clipping hover:text-clipping"
-                  title={s.placeholder ? `${s.label}: placeholder link, owner to add profile URL` : s.label}
-                >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                  <span className="sr-only">
-                    {s.label} (opens in a new tab)
-                  </span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-        <p className="flex gap-4">
-          <Link to="/privacy" className="hover:text-clipping">
-            Privacy
-          </Link>
-          <Link to="/terms" className="hover:text-clipping">
-            Terms
-          </Link>
-          <a href={`${routerBasename.replace(/\/$/, '')}/sitemap.xml`} className="hover:text-clipping">
-            Sitemap
-          </a>
+        <p className="flex items-center gap-2">
+          <Link to="/privacy" className="hover:text-poppy">Privacy</Link>
+          <Spark className="h-2 w-2 text-poppy" />
+          <Link to="/terms" className="hover:text-poppy">Terms</Link>
+          <Spark className="h-2 w-2 text-poppy" />
+          <a href="#main" className="hover:text-poppy">Back to top</a>
         </p>
       </div>
     </footer>

@@ -1,152 +1,122 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, MapPin, Navigation } from 'lucide-react';
-import { site } from '@/config/site';
+import { ArrowRight, MapPin, Navigation } from 'lucide-react';
 import Seo from '@/components/Seo';
-import Reveal from '@/components/Reveal';
-import { CtaBand, Eyebrow, PageHero } from '@/components/ui';
+import Img from '@/components/Img';
+import { Breadcrumbs, CtaBand, Eyebrow, Reveal } from '@/components/ui';
+import { site } from '@/config/site';
+import { pexels } from '@/lib/img';
 
-/* Positions on the schematic map (percent of the SVG box), roughly true to
-   geography relative to Lucasville. Illustrative, not to scale. */
-const pins = {
-  Lucasville: [50, 40],
-  Minford: [64, 44],
-  Portsmouth: [52, 72],
-  'West Portsmouth': [41, 70],
-  Wheelersburg: [68, 70],
-  Sciotoville: [61, 74],
-  Otway: [27, 49],
-  Waverly: [50, 10],
-  Peebles: [10, 30],
+const ZONES = {
+  core: { label: 'Core routes', detail: 'Weekly maintenance, every service', ring: 'bg-poppy text-chaparral' },
+  extended: { label: 'Extended routes', detail: 'Maintenance and all project work', ring: 'bg-chaparral text-adobe' },
+  project: { label: 'By arrangement', detail: 'Projects, clearance and cleanups', ring: 'bg-adobe text-chaparral border-2 border-chaparral' },
 };
 
-function AreaMap() {
-  return (
-    <svg viewBox="0 0 100 90" className="h-full w-full" role="img" aria-labelledby="map-title map-desc">
-      <title id="map-title">Schematic map of the BDM Luxe service area</title>
-      <desc id="map-desc">
-        Lucasville sits at the centre. Regular routes cover Minford, Portsmouth, West Portsmouth, Wheelersburg and Sciotoville within
-        about 15 miles; Otway, Waverly and Peebles are served for projects.
-      </desc>
-      <defs>
-        <pattern id="mowpat" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(25)">
-          <rect width="3" height="6" fill="#EFE8DA" opacity="0.05" />
-        </pattern>
-      </defs>
-      <rect width="100" height="90" fill="url(#mowpat)" />
-      {/* Ohio River (schematic) */}
-      <path d="M0 80 C 20 76, 30 82, 45 79 S 70 84, 100 74" fill="none" stroke="#A7AE94" strokeOpacity="0.35" strokeWidth="1.6" />
-      {/* Scioto River (schematic) */}
-      <path d="M48 0 C 50 20, 46 35, 49 50 S 52 70, 50 79" fill="none" stroke="#A7AE94" strokeOpacity="0.25" strokeWidth="1" strokeDasharray="1.5 1.5" />
-      {/* Route radius */}
-      <circle cx="50" cy="40" r="34" fill="#D7F25C" fillOpacity="0.05" stroke="#D7F25C" strokeOpacity="0.45" strokeWidth="0.4" strokeDasharray="1.2 1.2" />
-      <circle cx="50" cy="40" r="18" fill="#D7F25C" fillOpacity="0.07" stroke="#D7F25C" strokeOpacity="0.5" strokeWidth="0.3" />
-      {site.serviceArea.map((a) => {
-        const [x, y] = pins[a.name] ?? [50, 40];
-        const home = a.name === 'Lucasville';
-        return (
-          <g key={a.name}>
-            {home ? (
-              <path d={`M${x - 2.6} ${y - 2.6}h5.2v5.2h-5.2z`} fill="#D7F25C" transform={`rotate(45 ${x} ${y})`} />
-            ) : (
-              <circle cx={x} cy={y} r="1.3" fill="#EFE8DA" />
-            )}
-            <text x={x + (x > 80 ? -3 : 3)} y={y + 1} fontSize={home ? 3.4 : 2.6} fill={home ? '#D7F25C' : '#CFC7B6'} textAnchor={x > 80 ? 'end' : 'start'} fontFamily="Hanken Grotesk, sans-serif" fontWeight={home ? 700 : 500}>
-              {a.name}
-            </text>
-          </g>
-        );
-      })}
-      <text x="96" y="86" fontSize="2.2" fill="#A7AE94" textAnchor="end" fontFamily="Hanken Grotesk, sans-serif">
-        Ohio River · not to scale
-      </text>
-    </svg>
-  );
-}
+/** Schematic (not to scale) placement of towns around Ramona for the radar map. */
+const POS = {
+  ramona: [50, 50], sdce: [57, 58], 'santa-ysabel': [70, 30], poway: [28, 66], escondido: [24, 36], lakeside: [44, 82], 'rancho-bernardo': [20, 55], 'valley-center': [36, 16], julian: [84, 40],
+};
 
 export default function ServiceAreas() {
-  const routes = site.serviceArea.filter((a) => parseInt(a.distance, 10) <= 15);
-  const projects = site.serviceArea.filter((a) => parseInt(a.distance, 10) > 15);
+  const [active, setActive] = useState('ramona');
+  const a = site.serviceArea.find((s) => s.slug === active);
+
   return (
     <>
       <Seo
-        title="Service Areas: Lucasville, Portsmouth, Wheelersburg & Scioto County"
-        description="BDM Luxe serves Lucasville, Minford, Portsmouth, West Portsmouth, Wheelersburg and Sciotoville on weekly routes, plus Otway, Waverly and Peebles for landscape projects."
-      />
-      <PageHero
-        no="M"
-        eyebrow="Service areas"
-        title={
-          <>
-            Rooted in Lucasville. <span className="italic text-clipping">Routed across Scioto.</span>
-          </>
-        }
-        intro="Tight routes mean more time on your lawn and less on the road. Here is where our crews run."
+        title="Service Areas"
+        description="DC Nova serves Ramona, San Diego Country Estates, Poway, Escondido, Lakeside, Santa Ysabel, Rancho Bernardo, Julian and Valley Center with lawn care and brush clearance."
       />
 
-      <section aria-labelledby="map-heading" className="frame grid gap-10 py-16 sm:py-24 lg:grid-cols-12">
-        <h2 id="map-heading" className="sr-only">
-          Map and list of towns served
-        </h2>
-        <Reveal className="card aspect-[10/9] overflow-hidden p-4 lg:col-span-7" style={{ '--c': '30px' }}>
-          <AreaMap />
-        </Reveal>
-
-        <div className="space-y-10 lg:col-span-5">
-          <div>
-            <Eyebrow no="15">Weekly routes · within ~15 miles</Eyebrow>
-            <ul className="mt-5 divide-y divide-bone/10 border-y border-bone/10">
-              {routes.map((a) => (
-                <li key={a.name} className="flex items-center justify-between gap-4 py-4">
-                  <span className="flex items-center gap-3">
-                    <MapPin className="h-4 w-4 text-clipping" aria-hidden="true" />
-                    <span>
-                      <span className="block font-display text-xl">{a.name}</span>
-                      <span className="text-xs text-lichen">{a.note}</span>
-                    </span>
-                  </span>
-                  <span className="text-sm tabular-nums text-bone-dim">{a.distance}</span>
-                </li>
-              ))}
-            </ul>
+      <section className="on-dark relative overflow-hidden bg-chaparral text-adobe">
+        <Img src={pexels(18027616)} alt="" className="absolute inset-0 h-full w-full opacity-35" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-chaparral via-chaparral/85 to-chaparral/30" aria-hidden="true" />
+        <div className="frame relative pb-20 pt-10 lg:pb-28 lg:pt-14">
+          <Breadcrumbs light items={[{ label: 'Service areas' }]} />
+          <div className="mt-12 max-w-3xl">
+            <Eyebrow className="text-poppy">Where we work</Eyebrow>
+            <h1 className="mt-5 text-[clamp(2.6rem,7vw,5.4rem)] font-extrabold leading-[0.95]">Ramona, and about 25 miles in every direction.</h1>
+            <p className="mt-6 max-w-xl text-lg text-adobe/80">
+              Tight routes keep crews on time and travel costs out of your price. Pick a town on the map to see what we offer there.
+            </p>
           </div>
-          <div>
-            <Eyebrow no="30">Projects by arrangement</Eyebrow>
-            <ul className="mt-5 divide-y divide-bone/10 border-y border-bone/10">
-              {projects.map((a) => (
-                <li key={a.name} className="flex items-center justify-between gap-4 py-4">
-                  <span className="flex items-center gap-3">
-                    <Navigation className="h-4 w-4 text-lichen" aria-hidden="true" />
-                    <span>
-                      <span className="block font-display text-xl">{a.name}</span>
-                      <span className="text-xs text-lichen">{a.note}</span>
-                    </span>
-                  </span>
-                  <span className="text-sm tabular-nums text-bone-dim">{a.distance}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <p className="text-xs text-lichen">Distances are approximate driving miles from our Lucasville base.</p>
         </div>
       </section>
 
-      <section aria-labelledby="outside-title" className="border-y border-bone/10 bg-ink-2">
-        <div className="frame grid gap-8 py-16 md:grid-cols-2 md:items-center">
-          <div>
-            <h2 id="outside-title" className="text-3xl sm:text-4xl">Just outside the map?</h2>
-            <p className="mt-4 max-w-md text-bone-dim">
-              We take on projects across {site.address.county} and neighbouring Pike and Adams counties when the schedule allows. Commercial
-              contracts are considered case by case. Ask; the worst we can say is “not this season.”
+      <section className="frame grid gap-12 py-20 lg:grid-cols-12 lg:py-24">
+        {/* Radar map */}
+        <div className="lg:col-span-7">
+          <div className="relative mx-auto aspect-square max-w-[36rem] overflow-hidden rounded-full border-2 border-chaparral bg-adobe-2">
+            <div className="contours absolute inset-0" aria-hidden="true" />
+            {[88, 62, 34].map((d) => (
+              <span key={d} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-dashed border-chaparral/25" style={{ width: `${d}%`, height: `${d}%` }} aria-hidden="true" />
+            ))}
+            <span className="absolute left-1/2 top-1/2 h-px w-1/2 origin-left animate-spin-slow bg-gradient-to-r from-poppy to-transparent" aria-hidden="true" />
+            <ul aria-label="Towns served">
+              {site.serviceArea.map((t) => {
+                const [x, y] = POS[t.slug];
+                const on = active === t.slug;
+                return (
+                  <li key={t.slug} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${x}%`, top: `${y}%` }}>
+                    <button
+                      type="button"
+                      onClick={() => setActive(t.slug)}
+                      aria-pressed={on}
+                      className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[0.7rem] font-semibold shadow-sm transition sm:text-xs ${
+                        on ? 'scale-110 bg-chaparral text-adobe ring-4 ring-poppy' : ZONES[t.zone].ring
+                      }`}
+                    >
+                      {t.slug === 'ramona' ? <MapPin className="h-3.5 w-3.5" aria-hidden="true" /> : <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true" />}
+                      {t.name.replace(' (east)', '')}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <p className="mt-4 text-center text-sm text-chaparral/70">Schematic map, not to scale. Rings mark roughly 5, 15 and 25 miles.</p>
+        </div>
+
+        <div className="lg:col-span-5">
+          <div className="rounded-blob border-2 border-chaparral bg-adobe p-7 lg:sticky lg:top-32" aria-live="polite">
+            <p className="text-xs font-semibold uppercase tracking-label text-manzanita">{ZONES[a.zone].label}</p>
+            <h2 className="mt-2 text-4xl font-extrabold">{a.name}</h2>
+            <p className="mt-3 flex items-center gap-2 text-chaparral/75">
+              <Navigation className="h-4 w-4 text-manzanita" aria-hidden="true" />
+              {a.distance === 0 ? 'Our home base' : `About ${a.distance} miles from our yard`}
             </p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
-            <Link to="/contact" className="btn btn-ghost">
-              Ask about your town
-            </Link>
-            <Link to="/quote" className="btn btn-primary">
-              Request a quote <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            <p className="mt-5 text-lg">{a.note}</p>
+            <Link to={`/quote?area=${a.slug}`} className="btn-poppy mt-7 w-full">
+              Get a quote in {a.name.replace(' (east)', '')} <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Zone table */}
+      <section className="bg-adobe-2 py-20" aria-labelledby="zones-h">
+        <div className="frame">
+          <h2 id="zones-h" className="text-4xl font-extrabold sm:text-5xl">Every town, at a glance</h2>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {Object.entries(ZONES).map(([key, z], i) => (
+              <Reveal key={key} delay={i * 80} className="rounded-blob bg-adobe p-6 ring-2 ring-chaparral">
+                <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${z.ring}`}>{z.label}</span>
+                <p className="mt-3 text-chaparral/75">{z.detail}</p>
+                <ul className="mt-5 divide-y divide-chaparral/15">
+                  {site.serviceArea.filter((t) => t.zone === key).map((t) => (
+                    <li key={t.slug} className="flex items-center justify-between py-3">
+                      <span className="font-semibold">{t.name}</span>
+                      <span className="text-sm tabular-nums text-chaparral/70">{t.distance === 0 ? 'Base' : `~${t.distance} mi`}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-8 text-chaparral/80">
+            Outside these areas? <Link to="/contact" className="link-u font-semibold">Ask us anyway</Link>. Larger projects and brush clearance can travel.
+          </p>
         </div>
       </section>
 

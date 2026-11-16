@@ -1,151 +1,125 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight, Check, Phone } from 'lucide-react';
-import { site } from '@/config/site';
-import { getService, services } from '@/data/services';
-import { absoluteUrl } from '@/lib/paths';
+import { ArrowLeft, ArrowRight, CalendarDays, Check, Home as HomeIcon } from 'lucide-react';
 import Seo from '@/components/Seo';
 import Img from '@/components/Img';
-import Reveal from '@/components/Reveal';
-import { CtaBand, Eyebrow } from '@/components/ui';
+import { AccordionItem, Arch, Breadcrumbs, CtaBand, Eyebrow, Reveal } from '@/components/ui';
+import { site } from '@/config/site';
+import { services, serviceBySlug } from '@/data/services';
+import { SITE_URL } from '@/lib/paths';
 import NotFound from './NotFound';
 
 export default function ServiceDetail() {
   const { slug } = useParams();
-  const s = getService(slug);
+  const s = serviceBySlug(slug);
   if (!s) return <NotFound />;
-
+  const Icon = s.icon;
   const idx = services.indexOf(s);
   const next = services[(idx + 1) % services.length];
-  const related = services.filter((x) => x.slug !== s.slug).slice(0, 3);
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: s.name,
-    description: s.lede,
-    serviceType: s.name,
-    url: absoluteUrl(`/services/${s.slug}`),
-    provider: { '@id': `${absoluteUrl('/').replace(/\/$/, '')}/#business` },
-    areaServed: site.serviceArea.map((a) => `${a.name}, OH`),
-  };
+  const prev = services[(idx - 1 + services.length) % services.length];
 
   return (
     <>
-      <Seo title={`${s.name} in Lucasville & Scioto County`} description={`${s.short} ${s.lede}`.slice(0, 300)} image={`${s.image}?auto=compress&cs=tinysrgb&w=1200`} jsonLd={jsonLd} />
+      <Seo
+        title={`${s.name} in Ramona, CA`}
+        description={`${s.summary} Serving Ramona and inland San Diego County.`}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: s.name,
+          description: s.intro,
+          serviceType: s.name,
+          provider: { '@id': `${SITE_URL}/#business` },
+          areaServed: site.serviceArea.map((a) => a.name),
+        }}
+      />
 
-      {/* Split hero: full-height image left, copy right */}
-      <header className="grid min-h-[88vh] lg:grid-cols-2">
-        <div className="relative min-h-[48vh] lg:order-2">
-          <Img src={s.image} alt={s.alt} priority sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 h-full w-full" />
-          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent lg:bg-gradient-to-r lg:from-ink lg:via-transparent" />
-        </div>
-        <div className="relative flex flex-col justify-end px-4 pb-14 pt-10 sm:px-6 lg:px-10 lg:pb-20 lg:pt-44 xl:pl-[max(2.5rem,calc((100vw-88rem)/2+2.5rem))]">
-          <nav aria-label="Breadcrumb" className="mb-10">
-            <ol className="flex flex-wrap items-center gap-2 text-xs text-lichen">
-              <li>
-                <Link to="/" className="hover:text-clipping">Home</Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <Link to="/services" className="hover:text-clipping">Services</Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li aria-current="page" className="text-bone-dim">{s.name}</li>
-            </ol>
-          </nav>
-          <Eyebrow no={s.no}>Service</Eyebrow>
-          <h1 className="mt-6 text-5xl sm:text-6xl xl:text-7xl">{s.name}</h1>
-          <p className="mt-6 max-w-lg text-lg text-bone-dim">{s.lede}</p>
-          <dl className="mt-10 grid max-w-lg gap-6 border-t border-bone/10 pt-6 text-sm sm:grid-cols-2">
-            <div>
-              <dt className="label">Cadence</dt>
-              <dd className="mt-2 text-bone">{s.cadence}</dd>
+      <section className="frame pb-16 pt-10 lg:pt-14">
+        <Breadcrumbs items={[{ label: 'Services', href: '/services' }, { label: s.short }]} />
+        <div className="mt-10 grid items-center gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <span className="grid h-14 w-14 place-items-center rounded-full bg-chaparral text-poppy">
+              <Icon className="h-6 w-6" aria-hidden="true" />
+            </span>
+            <h1 className="mt-6 text-[clamp(2.4rem,6vw,5rem)] font-extrabold leading-[0.98]">{s.name}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-chaparral/80">{s.intro}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link to={`/quote?service=${s.slug}`} className="btn-poppy">
+                Quote this service <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link to="/pricing" className="btn-line">How pricing works</Link>
             </div>
-            <div>
-              <dt className="label">Ideal for</dt>
-              <dd className="mt-2 text-bone">{s.idealFor}</dd>
-            </div>
-          </dl>
-          <div className="mt-10 flex flex-col gap-3 xs:flex-row">
-            <Link to={`/quote?service=${s.slug}`} className="btn btn-primary">
-              Quote this service <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <a href={site.phoneHref} className="btn btn-ghost">
-              <Phone className="h-4 w-4" aria-hidden="true" /> {site.phone}
-            </a>
+          </div>
+          <div className="lg:col-span-5">
+            <Arch className="aspect-[4/5] border-2 border-chaparral">
+              <Img src={s.image} alt={s.alt} priority sizes="(min-width:1024px) 38vw, 100vw" className="h-full w-full" />
+            </Arch>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Body + included list */}
-      <section className="frame grid gap-14 py-20 sm:py-28 lg:grid-cols-12" aria-labelledby="approach-title">
-        <div className="lg:col-span-7">
-          <h2 id="approach-title" className="text-4xl sm:text-5xl">How we approach it</h2>
-          <div className="prose-bdm mt-8">
-            {s.body.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
-            ))}
-          </div>
-        </div>
-        <aside className="lg:col-span-4 lg:col-start-9" aria-labelledby="included-title">
-          <Reveal className="card p-8 lg:sticky lg:top-32">
-            <h2 id="included-title" className="font-display text-2xl">What’s included</h2>
-            <ul className="mt-6 space-y-3.5">
-              {s.includes.map((x) => (
-                <li key={x} className="flex gap-3 text-sm text-bone-dim">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-clipping" aria-hidden="true" /> {x}
-                </li>
+      <section className="border-y-2 border-chaparral bg-adobe-2 py-20">
+        <div className="frame grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Eyebrow>What’s included</Eyebrow>
+            <ul className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+              {s.includes.map((item, i) => (
+                <Reveal as="li" key={item} delay={i * 50} className="flex gap-3">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-poppy">
+                    <Check className="h-3.5 w-3.5" aria-hidden="true" strokeWidth={3} />
+                  </span>
+                  <span>{item}</span>
+                </Reveal>
               ))}
             </ul>
-            <Link to="/pricing" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-clipping hover:underline">
-              How pricing works <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Reveal>
-        </aside>
-      </section>
-
-      {/* Process strip */}
-      <section aria-labelledby="steps-title" className="border-y border-bone/10 bg-ink-2 py-16 sm:py-20">
-        <div className="frame">
-          <h2 id="steps-title" className="label">The steps</h2>
-          <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {s.process.map((step, i) => (
-              <Reveal as="li" key={step} delay={i * 80} className="relative border-t-2 border-clipping pt-5">
-                <span className="font-display text-4xl text-bone/25">{String(i + 1).padStart(2, '0')}</span>
-                <p className="mt-2 font-semibold text-bone">{step}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Related */}
-      <section aria-labelledby="related-title" className="frame py-20 sm:py-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <h2 id="related-title" className="text-3xl sm:text-4xl">Often paired with</h2>
-          <div className="flex gap-3">
-            <Link to="/services" className="btn btn-ghost">
-              <ArrowLeft className="h-4 w-4" aria-hidden="true" /> All services
-            </Link>
-            <Link to={`/services/${next.slug}`} className="btn btn-ghost">
-              Next: {next.name.split(' ')[0]} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
           </div>
+          <aside className="grid gap-4 self-start lg:col-span-4 lg:col-start-9">
+            <div className="rounded-blob bg-chaparral p-6 text-adobe">
+              <CalendarDays className="h-6 w-6 text-poppy" aria-hidden="true" />
+              <h2 className="mt-3 font-sans text-sm font-semibold uppercase tracking-label text-poppy">When we do it</h2>
+              <p className="mt-2">{s.rhythm}</p>
+            </div>
+            <div className="rounded-blob border-2 border-chaparral bg-adobe p-6">
+              <HomeIcon className="h-6 w-6 text-manzanita" aria-hidden="true" />
+              <h2 className="mt-3 font-sans text-sm font-semibold uppercase tracking-label text-manzanita">Best for</h2>
+              <p className="mt-2">{s.goodFor}</p>
+            </div>
+          </aside>
         </div>
-        <ul className="mt-10 grid gap-5 md:grid-cols-3">
-          {related.map((r) => (
-            <li key={r.slug}>
-              <Link to={`/services/${r.slug}`} className="card-ink group flex h-full flex-col p-7">
-                <span className="label">{r.no}</span>
-                <span className="mt-3 font-display text-2xl group-hover:text-clipping">{r.name}</span>
-                <span className="mt-3 text-sm text-bone-dim">{r.short}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
-      <CtaBand title={`Ready for ${s.name.toLowerCase()}?`} />
+      <section className="frame grid gap-12 py-20 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <Eyebrow>Questions</Eyebrow>
+          <h2 className="mt-4 text-4xl font-extrabold">About {s.short.toLowerCase()}</h2>
+          <Link to="/faq" className="mt-5 inline-block link-u font-semibold">More answers in the FAQ</Link>
+        </div>
+        <div className="lg:col-span-8">
+          {s.faqs.map((f, i) => (
+            <AccordionItem key={f.q} q={f.q} defaultOpen={i === 0}>
+              <p>{f.a}</p>
+            </AccordionItem>
+          ))}
+        </div>
+      </section>
+
+      <nav aria-label="More services" className="frame grid gap-4 pb-20 sm:grid-cols-2">
+        <Link to={`/services/${prev.slug}`} className="group flex items-center gap-4 rounded-blob border-2 border-chaparral p-6 hover:bg-adobe-2">
+          <ArrowLeft className="h-5 w-5 transition group-hover:-translate-x-1" aria-hidden="true" />
+          <span>
+            <span className="block text-xs font-semibold uppercase tracking-label text-sage">Previous</span>
+            <span className="font-display text-xl font-bold">{prev.name}</span>
+          </span>
+        </Link>
+        <Link to={`/services/${next.slug}`} className="group flex items-center justify-end gap-4 rounded-blob border-2 border-chaparral p-6 text-right hover:bg-adobe-2">
+          <span>
+            <span className="block text-xs font-semibold uppercase tracking-label text-sage">Next</span>
+            <span className="font-display text-xl font-bold">{next.name}</span>
+          </span>
+          <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" aria-hidden="true" />
+        </Link>
+      </nav>
+
+      <CtaBand title={`Ready for ${s.short.toLowerCase()}?`} />
     </>
   );
 }

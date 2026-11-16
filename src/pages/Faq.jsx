@@ -1,117 +1,102 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, Search } from 'lucide-react';
+import { Phone, Search } from 'lucide-react';
+import Seo from '@/components/Seo';
+import { AccordionItem, Breadcrumbs, Eyebrow } from '@/components/ui';
 import { site } from '@/config/site';
 import { faqGroups } from '@/data/content';
-import Seo from '@/components/Seo';
-import { AccordionItem, PageHero } from '@/components/ui';
 
 export default function Faq() {
-  const [query, setQuery] = useState('');
-  const q = query.trim().toLowerCase();
-  const groups = faqGroups
-    .map((g) => ({ ...g, items: q ? g.items.filter((i) => `${i.q} ${i.a}`.toLowerCase().includes(q)) : g.items }))
-    .filter((g) => g.items.length);
+  const [q, setQ] = useState('');
+  const groups = useMemo(() => {
+    const term = q.trim().toLowerCase();
+    if (!term) return faqGroups;
+    return faqGroups
+      .map((g) => ({ ...g, items: g.items.filter((i) => `${i.q} ${i.a}`.toLowerCase().includes(term)) }))
+      .filter((g) => g.items.length);
+  }, [q]);
   const total = groups.reduce((n, g) => n + g.items.length, 0);
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqGroups.flatMap((g) => g.items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } }))),
-  };
 
   return (
     <>
       <Seo
-        title="Frequently Asked Questions"
-        description="Answers about BDM Luxe quotes, weekly mowing, rain delays, clippings, design projects, permits, billing and insurance for lawn care in Scioto County, OH."
-        jsonLd={jsonLd}
-      />
-      <PageHero
-        no="Q"
-        eyebrow="FAQ"
-        title={
-          <>
-            Straight answers, <span className="italic text-clipping">no small print.</span>
-          </>
-        }
-        intro="Grouped by topic. Can’t find it? Call. The owner answers."
+        title="FAQ"
+        description="Answers about DC Nova lawn care in Ramona: quotes, contracts, mowing height, watering, defensible space, brush clearance timing, scheduling and billing."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqGroups.flatMap((g) => g.items).map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),
+        }}
       />
 
-      <section className="frame grid gap-12 py-16 sm:py-24 lg:grid-cols-12" aria-label="Questions and answers">
-        {/* Side rail: search + topic index */}
-        <aside className="lg:col-span-4">
-          <div className="space-y-8 lg:sticky lg:top-32">
-            <div>
-              <label htmlFor="faq-search" className="field-label">
-                Search questions
-              </label>
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-lichen" aria-hidden="true" />
-                <input
-                  id="faq-search"
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="e.g. rain, mulch, contract"
-                  className="field pl-7"
-                />
-              </div>
-              <p className="mt-2 text-xs text-lichen" aria-live="polite">
-                {q ? `${total} matching question${total === 1 ? '' : 's'}` : `${total} questions in ${faqGroups.length} topics`}
-              </p>
-            </div>
-            <nav aria-label="FAQ topics">
-              <p className="label">Topics</p>
-              <ol className="mt-4 space-y-1">
-                {faqGroups.map((g, i) => (
-                  <li key={g.id}>
-                    <a href={`#${g.id}`} className="group flex items-baseline gap-3 py-1.5 text-bone-dim hover:text-clipping">
-                      <span className="text-xs text-lichen">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="font-display text-xl">{g.title}</span>
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-            <div className="card p-6">
-              <p className="font-semibold">Still wondering?</p>
-              <a href={site.phoneHref} className="mt-4 flex items-center gap-2 text-sm text-bone hover:text-clipping">
-                <Phone className="h-4 w-4 text-clipping" aria-hidden="true" /> {site.phone}
-              </a>
-              <a href={site.emailHref} className="mt-2 flex items-center gap-2 text-sm text-bone hover:text-clipping">
-                <Mail className="h-4 w-4 text-clipping" aria-hidden="true" /> {site.email}
-              </a>
-            </div>
+      <section className="frame pb-10 pt-10 lg:pt-14">
+        <Breadcrumbs items={[{ label: 'FAQ' }]} />
+        <div className="mx-auto mt-10 max-w-3xl text-center">
+          <Eyebrow className="justify-center text-manzanita">Frequently asked</Eyebrow>
+          <h1 className="mt-5 text-[clamp(2.6rem,7vw,5rem)] font-extrabold leading-[0.95]">Questions, answered plainly.</h1>
+          <div className="relative mx-auto mt-10 max-w-xl">
+            <label htmlFor="faq-search" className="sr-only">Search questions</label>
+            <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-sage" aria-hidden="true" />
+            <input
+              id="faq-search"
+              type="search"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search: watering, contract, brush…"
+              className="field !rounded-full !py-4 !pl-14"
+            />
           </div>
-        </aside>
+          <p className="mt-3 text-sm text-chaparral/70" aria-live="polite">
+            {q ? `${total} matching question${total === 1 ? '' : 's'}` : `${total} questions in ${faqGroups.length} groups`}
+          </p>
+        </div>
+      </section>
 
-        {/* Grouped accordions */}
-        <div className="space-y-16 lg:col-span-8">
+      <section className="frame grid gap-12 pb-24 pt-6 lg:grid-cols-12">
+        <nav aria-label="FAQ groups" className="min-w-0 lg:col-span-3">
+          <ul className="no-scrollbar flex gap-2 overflow-x-auto lg:sticky lg:top-32 lg:flex-col lg:overflow-visible">
+            {faqGroups.map((g) => (
+              <li key={g.id} className="shrink-0">
+                <a href={`#${g.id}`} className="block rounded-full border-2 border-chaparral/20 px-4 py-2 text-sm font-semibold hover:border-chaparral lg:rounded-2xl lg:py-3">
+                  {g.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="space-y-16 lg:col-span-8 lg:col-start-5">
           {groups.length === 0 && (
-            <p className="text-bone-dim">
-              No questions match “{query}”. Try another word, or{' '}
-              <Link to="/contact" className="text-clipping underline underline-offset-4">
-                ask us directly
-              </Link>
-              .
-            </p>
+            <div className="rounded-blob border-2 border-dashed border-chaparral/30 p-10 text-center">
+              <p className="font-display text-2xl font-bold">No questions match “{q}”.</p>
+              <p className="mt-2 text-chaparral/75">Ask us directly. We usually reply the same day.</p>
+              <Link to="/contact" className="btn-ink mt-6">Ask a question</Link>
+            </div>
           )}
           {groups.map((g) => (
-            <section key={g.id} id={g.id} aria-labelledby={`${g.id}-title`} className="scroll-mt-32">
-              <div className="flex items-center gap-4">
-                <span className="mow-accent block h-1.5 w-10" aria-hidden="true" />
-                <h2 id={`${g.id}-title`} className="text-3xl sm:text-4xl">
-                  {g.title}
-                </h2>
-              </div>
-              <div className="mt-6 border-t border-bone/10">
-                {g.items.map((item) => (
-                  <AccordionItem key={`${item.q}-${!!q}`} q={item.q} a={item.a} defaultOpen={!!q} />
+            <section key={g.id} id={g.id} aria-labelledby={`${g.id}-h`} className="scroll-mt-32">
+              <h2 id={`${g.id}-h`} className="flex items-center gap-4 text-3xl font-extrabold sm:text-4xl">
+                <span className="h-3 w-3 shrink-0 rounded-full bg-poppy" aria-hidden="true" />
+                {g.title}
+              </h2>
+              <div className="mt-4">
+                {g.items.map((i) => (
+                  <AccordionItem key={i.q} q={i.q} compact defaultOpen={!!q}>
+                    <p>{i.a}</p>
+                  </AccordionItem>
                 ))}
               </div>
             </section>
           ))}
+
+          <aside className="flex flex-col items-start gap-5 rounded-blob bg-chaparral p-8 text-adobe sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-2xl font-bold">Still wondering about something?</h2>
+              <p className="mt-1 text-adobe/75">Call or send a message. A real person answers.</p>
+            </div>
+            <a href={site.phoneHref} className="btn-poppy shrink-0">
+              <Phone className="h-4 w-4" aria-hidden="true" /> {site.phoneDisplay}
+            </a>
+          </aside>
         </div>
       </section>
     </>

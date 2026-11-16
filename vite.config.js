@@ -13,7 +13,7 @@ const SITE_URL = (process.env.SITE_URL || site.deploy.domain || site.deploy.gith
 /** Emits sitemap.xml and robots.txt from the route list in src/config/site.js. */
 function seoFiles() {
   return {
-    name: 'bdm-seo-files',
+    name: 'dcnova-seo-files',
     apply: 'build',
     generateBundle() {
       const today = new Date().toISOString().slice(0, 10);
@@ -39,7 +39,7 @@ function seoFiles() {
 
 /**
  * The build uses relative URLs (base './') so one artifact runs both at a
- * domain root and under /BDM_Luxe/ on github.io. Relative URLs alone break
+ * domain root and under /dcnova/ on github.io. Relative URLs alone break
  * when a host serves index.html directly at a nested path, so this rewrites
  * index.html's asset tags to be resolved at runtime from the same base the
  * router detects (src/lib/paths.js). Parser-inserted via document.write so
@@ -48,7 +48,7 @@ function seoFiles() {
 function runtimeBase() {
   const repo = site.deploy.repoBase.toLowerCase();
   return {
-    name: 'bdm-runtime-base',
+    name: 'dcnova-runtime-base',
     apply: 'build',
     transformIndexHtml: {
       order: 'post',
@@ -73,7 +73,7 @@ function runtimeBase() {
 
 export default defineConfig({
   // Relative asset paths: the same build works at the domain root and under
-  // /BDM_Luxe/ on github.io. public/404.html always lands visitors on the
+  // /dcnova/ on github.io. public/404.html always lands visitors on the
   // base index.html, so relative URLs resolve correctly on deep links.
   base: './',
   plugins: [react(), seoFiles(), runtimeBase()],

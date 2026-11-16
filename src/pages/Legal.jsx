@@ -1,39 +1,52 @@
 import { Link } from 'react-router-dom';
 import Seo from '@/components/Seo';
-import { Eyebrow } from '@/components/ui';
+import { Breadcrumbs, Eyebrow } from '@/components/ui';
+import { formatDate } from '@/data/posts';
 
-/** Shared shell for long-form legal pages: sticky contents rail + article. */
-export default function Legal({ seo, no, eyebrow, title, updated, sections, children }) {
+/** Shared layout for Privacy and Terms: sticky table of contents + article. */
+export default function Legal({ title, description, updated, sections, intro }) {
   return (
     <>
-      <Seo {...seo} />
-      <header className="frame border-b border-bone/10 pb-12 pt-36 sm:pt-44">
-        <Eyebrow no={no}>{eyebrow}</Eyebrow>
-        <h1 className="mt-6 text-5xl sm:text-6xl">{title}</h1>
-        <p className="mt-5 text-sm text-lichen">
-          Last updated <time dateTime={updated}>{new Date(`${updated}T12:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
-        </p>
-      </header>
-      <div className="frame grid gap-12 py-16 lg:grid-cols-12">
+      <Seo title={title} description={description} />
+      <section className="frame pb-10 pt-10 lg:pt-14">
+        <Breadcrumbs items={[{ label: title }]} />
+        <div className="mt-10 border-b-2 border-chaparral pb-8">
+          <Eyebrow>Legal</Eyebrow>
+          <h1 className="mt-4 text-5xl font-extrabold sm:text-6xl">{title}</h1>
+          <p className="mt-4 text-chaparral/75">Last updated <time dateTime={updated}>{formatDate(updated)}</time></p>
+        </div>
+      </section>
+      <section className="frame grid gap-12 pb-24 lg:grid-cols-12">
         <nav aria-label="On this page" className="lg:col-span-3">
           <div className="lg:sticky lg:top-32">
-            <p className="label">On this page</p>
+            <p className="text-xs font-semibold uppercase tracking-label text-manzanita">On this page</p>
             <ol className="mt-4 space-y-2 text-sm">
               {sections.map((s, i) => (
                 <li key={s.id}>
-                  <a href={`#${s.id}`} className="flex gap-3 text-bone-dim hover:text-clipping">
-                    <span className="text-lichen">{String(i + 1).padStart(2, '0')}</span> {s.title}
+                  <a href={`#${s.id}`} className="flex gap-2 hover:underline">
+                    <span className="tabular-nums text-sage">{String(i + 1).padStart(2, '0')}</span> {s.title}
                   </a>
                 </li>
               ))}
             </ol>
-            <p className="mt-8 text-xs text-lichen">
-              Questions? <Link to="/contact" className="text-clipping underline underline-offset-2">Contact us</Link>.
-            </p>
           </div>
         </nav>
-        <article className="prose-bdm lg:col-span-8 lg:col-start-5 [&_h2]:scroll-mt-32 [&_h2:first-child]:mt-0">{children}</article>
-      </div>
+        <div className="prose-nova lg:col-span-8 lg:col-start-5">
+          <p className="text-lg">{intro}</p>
+          {sections.map((s, i) => (
+            <section key={s.id} id={s.id} className="scroll-mt-32">
+              <h2>
+                <span className="mr-3 text-poppy">{String(i + 1).padStart(2, '0')}</span>
+                {s.title}
+              </h2>
+              {s.body}
+            </section>
+          ))}
+          <p className="rounded-2xl border-2 border-dashed border-manzanita p-4 text-sm">
+            This page is a plain-language template provided with the website. Have it reviewed by a qualified professional before relying on it. Questions? <Link to="/contact">Contact us</Link>.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

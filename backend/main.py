@@ -19,9 +19,9 @@ from email_service import (
     booking_status_html, contact_confirmation_html, contact_admin_notification_html,
 )
 
-app = FastAPI(title="BDM Luxe LLC API", version="1.0.0")
+app = FastAPI(title="DC Nova LLC API", version="1.0.0")
 
-DEFAULT_ADMIN_EMAIL = "bdmluxe@proton.me"
+DEFAULT_ADMIN_EMAIL = "dcnovallc@proton.me"
 
 origins = [
     "http://localhost:5173",
@@ -33,8 +33,8 @@ origins = [
     # origin has no path, so this one entry covers it).
     "https://clintonkes.github.io",
     # Production domain.
-    "https://bdmluxe.com",
-    "https://www.bdmluxe.com",
+    "https://dcnovallc.com",
+    "https://www.dcnovallc.com",
 ]
 render_url = os.getenv("RENDER_EXTERNAL_URL")
 if render_url:
@@ -90,7 +90,7 @@ def _seed_admin():
 def _generate_reference():
     ts = str(int(time.time()))[-6:]
     rand = "".join(random.choices(string.digits, k=3))
-    return f"BDM{ts}{rand}"
+    return f"DCN{ts}{rand}"
 
 
 # ── Public Endpoints ──────────────────────────────────────────────
@@ -126,7 +126,7 @@ def create_booking(data: BookingCreate, background_tasks: BackgroundTasks, db: S
     background_tasks.add_task(
         send_email,
         to_email=data.email,
-        subject=f"Your BDM Luxe quote request {reference}",
+        subject=f"Your DC Nova quote request {reference}",
         html_body=booking_confirmation_html(
             name=data.name,
             reference=reference,
@@ -165,7 +165,7 @@ def create_contact(data: ContactCreate, background_tasks: BackgroundTasks, db: S
     background_tasks.add_task(
         send_email,
         to_email=data.email,
-        subject="Thank you for contacting BDM Luxe",
+        subject="Thank you for contacting DC Nova",
         html_body=contact_confirmation_html(
             name=data.name,
             subject=data.subject,
@@ -237,7 +237,7 @@ def update_booking_status(
     background_tasks.add_task(
         send_email,
         to_email=booking.email,
-        subject=f"BDM Luxe service update: {booking.reference}",
+        subject=f"DC Nova service update: {booking.reference}",
         html_body=booking_status_html(
             name=booking.name,
             reference=booking.reference,

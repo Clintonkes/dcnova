@@ -45,9 +45,9 @@ export async function submitForm(type, payload) {
   if (!path) throw new SubmitError(`Unknown form type: ${type}`);
 
   if (!apiUrl) {
-    if (import.meta.env.DEV) console.info(`[BDM Luxe] ${type} submission (no backend; set VITE_API_URL to send for real)`, payload);
+    if (import.meta.env.DEV) console.info(`[DC Nova] ${type} submission (no backend; set VITE_API_URL to send for real)`, payload);
     await new Promise((r) => setTimeout(r, 1100));
-    return { demo: true, reference: type === 'quote' ? `BDM${Date.now().toString().slice(-9)}` : undefined };
+    return { demo: true, reference: type === 'quote' ? `DCN${Date.now().toString().slice(-9)}` : undefined };
   }
 
   const controller = new AbortController();

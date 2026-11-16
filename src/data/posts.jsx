@@ -1,246 +1,149 @@
 import { Link } from 'react-router-dom';
 import { pexels } from '@/lib/img';
 
-/* Journal posts. Bodies are JSX so they can link to other pages. */
+/** Field notes. Slugs must match the routes list in src/config/site.js. */
 export const posts = [
   {
-    slug: 'when-to-start-mowing-in-southern-ohio',
-    title: 'When to start mowing in southern Ohio, and how high to cut',
-    excerpt:
-      'The first cut of the year sets up the whole season. Here is how to time it by soil temperature, not the calendar, and the mowing heights we use month by month.',
-    category: 'Lawn care',
-    date: '2026-03-02',
-    readMins: 6,
-    image: pexels(6728925),
-    alt: 'Low view across sunlit grass toward a push mower in warm spring light',
+    slug: 'defensible-space-ramona-100-foot-rule',
+    title: 'Defensible space in Ramona: what the 100-foot rule asks of your yard',
+    dek: 'A plain-language walk through the zones around your house, what to cut, what to keep, and when to do it.',
+    category: 'Fire safety',
+    date: '2026-04-14',
+    readMins: 7,
+    image: pexels(18027616),
+    alt: 'Rolling golden hills dotted with oak trees in late evening light',
     body: (
       <>
         <p>
-          Every spring the same question comes in: <em>when should the first mow happen?</em> In Scioto County the honest
-          answer is “later than you think, and higher than you think.” Cool-season lawns (the tall fescue,
-          Kentucky bluegrass and ryegrass blends that make up most yards here) wake up on soil temperature, and
-          cutting too early or too short costs you the rest of the season.
+          Every spring the hills around Ramona go from green to gold in a few weeks. That cured grass is beautiful, and it is also the fuel that carries fire toward houses. Defensible space is the buffer you keep between the two. It gives your home a better chance of surviving on its own and gives firefighters room to work.
+        </p>
+        <p>
+          California law requires defensible space around structures in fire hazard areas, and CAL FIRE publishes the guidance most local inspectors work from. Here is what that guidance means for an ordinary backcountry lot.
         </p>
 
-        <h2>Time it by the soil, not the date</h2>
+        <h2>The zones, from the house out</h2>
+        <h3>Zone 0: the first 5 feet (ember-resistant)</h3>
         <p>
-          Cool-season grass starts active growth once soil at a two-inch depth holds around 50°F for several days.
-          In the Lucasville and Portsmouth area that usually lands somewhere between late March and mid-April, depending
-          on the year. Two easy signals:
+          Most homes lost to wildfire are ignited by embers, not by a wall of flame. The strip right against the house is where embers land and pile up. State rules for this zone are still being finalized, but the direction is clear: keep it free of anything that burns easily.
         </p>
         <ul>
-          <li>Forsythia is in full bloom, a reliable natural soil-temperature marker.</li>
-          <li>The lawn has visibly grown about an inch past its winter height and is greening evenly, not just in patches.</li>
+          <li>Swap bark mulch against the foundation for gravel, pavers or bare soil.</li>
+          <li>Clear dead leaves and needles from roofs, gutters, decks and the base of walls.</li>
+          <li>Move firewood, lumber and propane tanks away from the house.</li>
+          <li>Keep plants here sparse, low, well-watered and away from windows and vents.</li>
+        </ul>
+
+        <h3>Zone 1: 5 to 30 feet (lean, clean and green)</h3>
+        <ul>
+          <li>Remove all dead plants, grass and weeds.</li>
+          <li>Keep tree branches at least 10 feet from chimneys and other trees.</li>
+          <li>Space shrubs so fire can’t jump from one to the next.</li>
+          <li>Keep irrigated lawn and plantings watered. A green, mowed lawn is one of the better things to have here.</li>
+        </ul>
+
+        <h3>Zone 2: 30 to 100 feet (reduce the fuel)</h3>
+        <ul>
+          <li>Cut annual grasses to a maximum height of 4 inches.</li>
+          <li>Create horizontal space between shrubs and trees, and more of it on slopes.</li>
+          <li>Limb trees up so fire on the ground can’t climb into the canopy.</li>
+          <li>Remove fallen branches and thick layers of leaf litter.</li>
         </ul>
         <p>
-          Before that, the ground is often soft. Mowing saturated clay (and most of southern Ohio is clay) compacts
-          it and leaves ruts that last into summer. If your shoe sinks when you walk across the lawn, wait.
+          The 100 feet is measured from the structure, and only applies within your property line. If your neighbor’s land sits inside your 100 feet, talk with them and with your local fire authority.
         </p>
 
-        <h2>The one-third rule</h2>
+        <h2>Timing matters as much as the work</h2>
         <p>
-          Never remove more than a third of the grass blade in a single cut. Taking more forces the plant to pull
-          from its root reserves to regrow leaf, right when it should be building roots for summer. If the lawn
-          has got away from you, bring it down in two cuts a few days apart rather than one scalping pass.
+          Cut too early and the grass grows back before summer. Cut too late and you are running equipment over cured, explosive fuel. For most of Ramona, the sweet spot is late April through early June, as the grass browns but before the heat sets in. A second pass before the fall Santa Ana season catches regrowth and the leaf drop.
         </p>
-
-        <h2>Mowing heights we use, month by month</h2>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Period</th>
-              <th scope="col">Height (tall fescue blends)</th>
-              <th scope="col">Why</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>First cut (late Mar to Apr)</td>
-              <td>3 in</td>
-              <td>Tidies winter growth without stressing waking roots.</td>
-            </tr>
-            <tr>
-              <td>May to June</td>
-              <td>3.5 in</td>
-              <td>Peak growth; height shades out crabgrass seedlings.</td>
-            </tr>
-            <tr>
-              <td>July to August</td>
-              <td>4 in</td>
-              <td>Taller blades shade the soil and hold moisture through heat.</td>
-            </tr>
-            <tr>
-              <td>September to October</td>
-              <td>3.5 in</td>
-              <td>Recovery season; supports autumn root growth.</td>
-            </tr>
-            <tr>
-              <td>Final cuts (Nov)</td>
-              <td>2.5 to 3 in</td>
-              <td>Shorter going into winter reduces snow mould risk.</td>
-            </tr>
-          </tbody>
-        </table>
         <p>
-          Kentucky bluegrass-heavy lawns can sit about half an inch lower in each band. If you are not sure what
-          you have, err on the higher side; cutting too tall is very rarely the problem.
+          <strong>How you cut matters too.</strong> CAL FIRE’s advice is to mow before 10 a.m., and never when it is hot, windy or very dry. Metal blades striking a rock can throw a spark. Our crews use string trimmers near rocks, carry water and an extinguisher on every clearance job, and stand down on red-flag days.
         </p>
 
-        <h2>Sharp blades matter more than the mower</h2>
-        <p>
-          A dull blade tears the leaf instead of slicing it. The torn tips brown within a day or two, giving the
-          whole lawn a greyish cast, and the ragged wounds are an easy entry for fungal disease in humid weather.
-          Sharpen at least once a season for a home mower; we sharpen weekly because we cut every day.
-        </p>
-
-        <blockquote>Mow high, mow often, and keep the blade sharp. Almost everything else is detail.</blockquote>
-
-        <h2>Leave the clippings</h2>
-        <p>
-          With the one-third rule followed, clippings are short enough to fall between the blades and break down
-          within days. They return nitrogen to the soil and do not cause thatch. Thatch is made of roots and
-          stems, not leaf clippings. Bag only when the grass is long or wet enough to clump.
-        </p>
-
-        <h2>Quick checklist for your first mow</h2>
+        <h2>A quick self-check</h2>
         <ol>
-          <li>Wait for forsythia bloom and dry, firm ground.</li>
-          <li>Clear sticks, stones and winter debris first.</li>
-          <li>Set the deck to 3 inches and sharpen the blade.</li>
-          <li>Mow in a different direction from your last cut of autumn.</li>
-          <li>Edge beds and walks once, to set clean lines for the season.</li>
+          <li>Walk the outside of the house. Is anything that burns touching the walls?</li>
+          <li>Look up. Are branches over the roof, or is the gutter full?</li>
+          <li>Pace out 30 feet. Is everything in that ring alive, watered and spaced out?</li>
+          <li>Pace to 100 feet, or your property line. Is the grass taller than your ankle?</li>
         </ol>
         <p>
-          Would rather hand the whole thing over? Our <Link to="/services/weekly-maintenance">weekly maintenance</Link>{' '}
-          routes follow exactly this calendar.{' '}
-          <Link to="/quote">Request a walk-through</Link> and we will put you on a route day.
+          If you answered “yes” to the last three, or got a notice from an inspector, it is time to book a clearance. We work from current guidance, take before-and-after photos for your records, and haul the material away.{' '}
+          <Link to="/services/brush-clearance">See how our brush clearance works</Link>, or{' '}
+          <Link to="/quote">request a quote</Link>.
+        </p>
+        <p className="text-sm text-chaparral/70">
+          This article is general guidance, not legal advice. Requirements change, and your local fire authority’s interpretation is the one that counts. Check readyforwildfire.org and San Diego County Fire for current rules.
         </p>
       </>
     ),
   },
   {
-    slug: 'mulch-depth-and-edging-guide',
-    title: 'Mulch depth and bed edging: a field guide',
-    excerpt:
-      'How deep mulch should really be, why “mulch volcanoes” kill trees, and how to cut a spade edge that lasts all season instead of a month.',
-    category: 'Beds & borders',
-    date: '2026-04-14',
-    readMins: 7,
-    image: pexels(4079768),
-    alt: 'Groundskeeper trimming low clipped hedging beside a crisp bed edge in a formal garden',
+    slug: 'watering-schedule-inland-san-diego-lawns',
+    title: 'Watering a lawn in inland San Diego County: a season-by-season schedule',
+    dek: 'Why deep and infrequent beats a little every day, how to stop runoff on clay, and how to set your controller by season.',
+    category: 'Water',
+    date: '2026-06-02',
+    readMins: 6,
+    image: pexels(25283561),
+    alt: 'Pop-up sprinkler spraying a fan of water across green grass',
     body: (
       <>
         <p>
-          Fresh mulch and sharp bed edges are the fastest way to make a property look cared for. They are also two
-          of the most commonly over-done jobs in landscaping. Here is what we do, and why.
+          Most of the struggling lawns we see in Ramona aren’t short of water. They get it the wrong way: short, daily bursts that wet the top inch of soil, run off the clay, and train roots to stay shallow. Change the pattern and you can often use less water and get a better lawn.
         </p>
 
-        <h2>How deep should mulch be?</h2>
-        <p>
-          <strong>Two to three inches, settled.</strong> That is enough to block light from weed seeds and slow
-          evaporation, while still letting water and air reach the soil. Less than two inches and weeds push
-          through; more than four and you start to cause problems:
-        </p>
+        <h2>The rule: deep, infrequent, early</h2>
         <ul>
-          <li>Water sheds off the top instead of soaking in, so plants go thirsty under a “moist-looking” bed.</li>
-          <li>Roots grow up into the mulch layer, where they dry out and freeze more easily.</li>
-          <li>In our heavy clay, a thick layer on top of slow-draining soil keeps the root zone waterlogged.</li>
+          <li><strong>Deep:</strong> wet the root zone, about 6 inches for fescue. Roots follow the water down, and deep roots ride out heat waves.</li>
+          <li><strong>Infrequent:</strong> let the top of the soil dry between waterings. It discourages fungus and shallow roots.</li>
+          <li><strong>Early:</strong> water before sunrise, when evaporation and wind are lowest and the grass dries off as the day warms.</li>
         </ul>
+
+        <h2>Cycle and soak: the fix for clay and slopes</h2>
         <p>
-          If last year’s mulch is still an inch or two deep, you only need a light top-up, or simply rake and
-          refresh what is there. Piling a new three inches on every spring is how beds end up eight inches deep.
+          Our soils, especially the heavier clays, take water slowly. Run a spray zone for 15 minutes straight and much of it ends up in the gutter. Instead, split the run into two or three shorter cycles with about an hour between them. Each cycle soaks in before the next arrives. Most modern controllers have a cycle-and-soak setting; if yours doesn’t, add extra start times.
+        </p>
+        <p>
+          A simple test: run one cycle, wait 30 minutes, then push a long screwdriver into the lawn. Where it slides in easily, the soil is wet. If it stops at 2 inches, you need more cycles, not longer ones.
         </p>
 
-        <h2>Never build a mulch volcano</h2>
-        <p>
-          Mulch heaped against a tree trunk is one of the most common, and most damaging, sights in residential
-          landscaping. Bark is not meant to stay wet. Constant moisture against the trunk invites rot, fungal
-          cankers and voles, which tunnel in and chew the bark in winter.
-        </p>
-        <p>
-          The fix is simple: pull mulch back so the <strong>root flare</strong> (where the trunk widens into the
-          roots) is visible, leaving a gap of three to six inches. Think doughnut, not volcano. The same applies to
-          shrub stems and perennial crowns.
-        </p>
-
-        <h2>Which mulch?</h2>
+        <h2>A starting schedule by season</h2>
+        <p>These are starting points for an established tall fescue lawn on spray heads. Adjust for your soil, shade and slope, and always follow your water district’s current watering rules.</p>
         <table>
           <thead>
-            <tr>
-              <th scope="col">Type</th>
-              <th scope="col">Good for</th>
-              <th scope="col">Watch for</th>
-            </tr>
+            <tr><th scope="col">Season</th><th scope="col">Days per week</th><th scope="col">Per day (spray heads)</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Double-shredded hardwood</td>
-              <td>Most beds; knits together and stays put on slopes</td>
-              <td>Fades to grey within a season</td>
-            </tr>
-            <tr>
-              <td>Dyed (black / brown)</td>
-              <td>Holding colour all summer; strong contrast with turf</td>
-              <td>Choose products made from clean wood, not pallets</td>
-            </tr>
-            <tr>
-              <td>Cedar</td>
-              <td>Slow to break down; pleasant scent</td>
-              <td>Lighter, can float off in heavy rain</td>
-            </tr>
-            <tr>
-              <td>Pine bark nuggets</td>
-              <td>Acid-loving plants like azaleas and hollies</td>
-              <td>Washes out on any slope</td>
-            </tr>
+            <tr><td>Winter (Dec to Feb)</td><td>0 to 1, skip after rain</td><td>2 cycles × 4 min</td></tr>
+            <tr><td>Spring (Mar to May)</td><td>2</td><td>2 cycles × 5 min</td></tr>
+            <tr><td>Summer (Jun to Sep)</td><td>3</td><td>3 cycles × 5 min</td></tr>
+            <tr><td>Fall (Oct to Nov)</td><td>2</td><td>2 cycles × 5 min</td></tr>
           </tbody>
         </table>
-
-        <h2>Cutting a spade edge that lasts</h2>
         <p>
-          A string-trimmed edge looks neat for a week. A proper spade edge holds its line for the whole season. The
-          method:
-        </p>
-        <ol>
-          <li>
-            <strong>Mark the line.</strong> Use a garden hose for curves or a string line for straight runs. Smooth,
-            generous curves are easier to mow around than tight wiggles.
-          </li>
-          <li>
-            <strong>Cut vertically on the lawn side.</strong> Drive a flat edging spade straight down 3 to 4 inches
-            along the line. The vertical face is what stops grass roots creeping into the bed.
-          </li>
-          <li>
-            <strong>Bevel on the bed side.</strong> Angle back from the bottom of the cut toward the bed, creating a
-            small V-shaped trench. Lift out the wedge of soil and turf.
-          </li>
-          <li>
-            <strong>Leave the trench open.</strong> Mulch should finish just below the turf, filling the bed but not
-            the trench. That shadow line is what makes an edge look crisp.
-          </li>
-        </ol>
-        <p>
-          Re-cut in spring, and touch up lightly mid-summer where Bermuda or creeping grasses try to bridge the gap.
+          Rotor heads put down water more slowly than sprays, so they need roughly two to three times the run time. Warm-season grasses like Bermuda go dormant in winter and need very little water until spring green-up.
         </p>
 
-        <h2>When to mulch</h2>
-        <p>
-          Mid to late spring, once the soil has warmed, usually late April to May in southern Ohio. Mulching
-          cold, wet soil in March keeps it cold longer and delays plant growth. A light autumn top-up after leaf
-          cleanup helps insulate perennials through winter.
-        </p>
+        <h2>Signs you are under- or over-watering</h2>
+        <ul>
+          <li><strong>Too little:</strong> footprints that stay pressed in, a blue-grey tint, and dry spots that show up first on slopes and near pavement.</li>
+          <li><strong>Too much:</strong> mushrooms, soggy low spots, algae on the soil, and a lawn that feels spongy underfoot.</li>
+          <li><strong>The system, not the schedule:</strong> one brown patch in an otherwise green lawn usually means a clogged, tilted or broken head.</li>
+        </ul>
 
+        <h2>Get the hardware right first</h2>
         <p>
-          Our <Link to="/services/bed-care">bed care service</Link> does all of the above in a single visit: edge,
-          weed, mulch at the right depth and clear trunks.{' '}
-          <Link to="/quote">Get a quote for your beds</Link>.
+          No schedule fixes a broken system. Before you change run times, run each zone and watch it: look for geysers, misting from too much pressure, heads blocked by grass, and spray landing on the driveway. An{' '}
+          <Link to="/services/irrigation">irrigation tune-up</Link> fixes those problems and leaves you with a schedule set for your yard. If you would rather need less water altogether, read about{' '}
+          <Link to="/services/water-wise-conversions">water-wise conversions</Link>.
         </p>
       </>
     ),
   },
 ];
 
-export const getPost = (slug) => posts.find((p) => p.slug === slug);
+export const postBySlug = (slug) => posts.find((p) => p.slug === slug);
 
 export const formatDate = (iso) =>
   new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });

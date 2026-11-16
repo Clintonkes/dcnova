@@ -6,11 +6,11 @@ logger = logging.getLogger(__name__)
 
 # Email configuration: Resend API
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
-EMAIL_FROM = os.getenv("EMAIL_FROM", "BDM Luxe LLC <onboarding@resend.dev>")
+EMAIL_FROM = os.getenv("EMAIL_FROM", "DC Nova LLC <onboarding@resend.dev>")
 EMAIL_ENABLED = bool(RESEND_API_KEY)
 
-BUSINESS_NAME = "BDM LUXE"
-BUSINESS_LOCATION = "LUCASVILLE, OH"
+BUSINESS_NAME = "DC NOVA"
+BUSINESS_LOCATION = "RAMONA, CA"
 PINE = "#121410"
 GOLD = "#55601a"
 
@@ -117,7 +117,7 @@ def booking_confirmation_html(name: str, reference: str, address: str, service: 
                 ("Status", "Pending Review"),
             ])}
         </div>
-        <p>Thank you for considering BDM Luxe for your property.</p>
+        <p>Thank you for considering DC Nova for your property.</p>
     """
     return _layout(f"Thank you, {_e(name)}.", body, reference=reference)
 
@@ -152,7 +152,7 @@ def booking_status_html(name: str, reference: str, status: str, address: str) ->
         "confirmed": "Your service request has been <strong>confirmed</strong>. We look forward to caring for your property.",
         "approved": "Your service request has been <strong>approved</strong>. Our team will contact you shortly to schedule your first visit.",
         "cancelled": "Your service request has been <strong>cancelled</strong>. If you believe this is an error, please contact us.",
-        "completed": "Your service has been <strong>completed</strong>. Thank you for trusting BDM Luxe with your property.",
+        "completed": "Your service has been <strong>completed</strong>. Thank you for trusting DC Nova with your property.",
     }
 
     status_colors = {

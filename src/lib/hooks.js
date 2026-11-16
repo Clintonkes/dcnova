@@ -47,7 +47,7 @@ export function useReveal() {
   return ref;
 }
 
-/** True when the business is open right now (America/New_York). */
+/** True when the business is open right now (America/Los_Angeles). */
 export function useOpenNow(hours) {
   const [state, setState] = useState(() => computeOpen(hours));
   useEffect(() => {
@@ -60,7 +60,7 @@ export function useOpenNow(hours) {
 function computeOpen(hours) {
   try {
     const parts = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/New_York',
+      timeZone: 'America/Los_Angeles',
       weekday: 'short',
       hour: '2-digit',
       minute: '2-digit',

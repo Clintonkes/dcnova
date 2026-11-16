@@ -1,81 +1,87 @@
 /**
- * BDM Luxe: single source of truth.
- * Business details, brand colours, fonts, navigation and form settings all live
- * here. tailwind.config.js and vite.config.js read this file too, so a change
- * here flows through the whole site (and sitemap/JSON-LD) on the next build.
- * Keep this file free of imports: it is loaded by Node at build time.
+ * DC Nova LLC: single source of truth.
+ * Business details, brand colours, fonts, navigation and form settings all
+ * live here. tailwind.config.js and vite.config.js read this file too, so a
+ * change here flows through the whole site (plus sitemap and JSON-LD) on the
+ * next build. Keep this file free of imports: Node loads it at build time.
  */
 
 export const site = {
-  name: 'BDM Luxe LLC',
-  shortName: 'BDM Luxe',
-  legalName: 'BDM Luxe LLC',
-  industry: 'Lawn care & landscaping',
-  tagline: 'Lawn & Landscape Atelier',
-  promise: 'Grounds kept to a tailored standard.',
+  name: 'DC Nova LLC',
+  shortName: 'DC Nova',
+  legalName: 'DC Nova LLC',
+  industry: 'Lawn care',
+  tagline: 'Lawn care for the Ramona backcountry',
+  promise: 'Healthy lawns, lean water bills, clean fire lines.',
   description:
-    'BDM Luxe is an owner-operated lawn care and landscaping company in Lucasville, Ohio, serving Scioto County with weekly maintenance, landscape design, bed care, hardscape and commercial grounds care.',
+    'DC Nova is a lawn care company in Ramona, California. Mowing, fertilization, aeration, irrigation repair, water-wise conversions and defensible-space brush clearance across inland San Diego County.',
 
-  phone: '740-727-0803',
-  phoneHref: 'tel:+17407270803',
-  email: 'bdmluxe@proton.me',
-  emailHref: 'mailto:bdmluxe@proton.me',
+  phone: '+1 (760) 315-2870',
+  phoneDisplay: '(760) 315-2870',
+  phoneHref: 'tel:+17603152870',
+  email: 'dcnovallc@proton.me',
+  emailHref: 'mailto:dcnovallc@proton.me',
 
   address: {
-    street: '178 Brooksville Drive',
-    city: 'Lucasville',
-    region: 'OH',
-    postal: '45648',
+    street: '1512 San Vicente Rd',
+    city: 'Ramona',
+    region: 'CA',
+    postal: '92065',
     country: 'US',
-    county: 'Scioto County',
+    county: 'San Diego County',
   },
-  // Approximate centre of Lucasville, used for the JSON-LD geo field only.
-  geo: { lat: 38.8795, lng: -82.9969 },
+  // Approximate location of the street address, used for JSON-LD geo only.
+  geo: { lat: 33.0303, lng: -116.8698 },
+  timeZone: 'America/Los_Angeles',
 
+  /** PLACEHOLDER hours: owner to confirm before launch. */
+  hoursPlaceholder: true,
   hours: [
-    { label: 'Monday to Friday', short: 'Mon to Fri', days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], open: '08:00', close: '18:00', value: '8:00 am to 6:00 pm' },
-    { label: 'Saturday', short: 'Sat', days: ['Sa'], open: '09:00', close: '14:00', value: '9:00 am to 2:00 pm' },
+    { label: 'Monday to Friday', short: 'Mon–Fri', days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], open: '07:00', close: '17:00', value: '7:00 am – 5:00 pm' },
+    { label: 'Saturday', short: 'Sat', days: ['Sa'], open: '08:00', close: '13:00', value: '8:00 am – 1:00 pm' },
     { label: 'Sunday', short: 'Sun', days: ['Su'], open: null, close: null, value: 'Closed' },
   ],
 
+  /** Service area. Distances are approximate road miles from the Ramona yard. */
   serviceArea: [
-    { name: 'Lucasville', note: 'Home base, first-call priority', distance: '0 mi' },
-    { name: 'Minford', note: 'Weekly maintenance routes', distance: '8 mi' },
-    { name: 'Portsmouth', note: 'Residential & commercial', distance: '11 mi' },
-    { name: 'West Portsmouth', note: 'Residential & commercial', distance: '12 mi' },
-    { name: 'Wheelersburg', note: 'Weekly maintenance routes', distance: '14 mi' },
-    { name: 'Sciotoville', note: 'Residential routes', distance: '15 mi' },
-    { name: 'Otway', note: 'Design & install projects', distance: '17 mi' },
-    { name: 'Waverly', note: 'Design & install projects', distance: '22 mi' },
-    { name: 'Peebles', note: 'Projects by arrangement', distance: '28 mi' },
+    { name: 'Ramona', slug: 'ramona', distance: 0, zone: 'core', note: 'Home yard. Weekly routes run every weekday.' },
+    { name: 'San Diego Country Estates', slug: 'sdce', distance: 5, zone: 'core', note: 'Weekly routes, slopes and HOA frontages.' },
+    { name: 'Santa Ysabel', slug: 'santa-ysabel', distance: 14, zone: 'extended', note: 'Acreage, brush clearance and seasonal visits.' },
+    { name: 'Poway', slug: 'poway', distance: 15, zone: 'extended', note: 'Maintenance routes and water-wise conversions.' },
+    { name: 'Escondido (east)', slug: 'escondido', distance: 17, zone: 'extended', note: 'Maintenance routes and irrigation work.' },
+    { name: 'Lakeside', slug: 'lakeside', distance: 18, zone: 'extended', note: 'Defensible space and seasonal cleanups.' },
+    { name: 'Rancho Bernardo', slug: 'rancho-bernardo', distance: 19, zone: 'extended', note: 'Irrigation tune-ups and turf replacement.' },
+    { name: 'Valley Center', slug: 'valley-center', distance: 22, zone: 'project', note: 'Projects and brush clearance by arrangement.' },
+    { name: 'Julian', slug: 'julian', distance: 23, zone: 'project', note: 'Fire-season clearance and fall cleanups by arrangement.' },
   ],
 
   social: [
-    { label: 'Facebook', href: 'https://www.facebook.com/', placeholder: true },
     { label: 'Instagram', href: 'https://www.instagram.com/', placeholder: true },
+    { label: 'Facebook', href: 'https://www.facebook.com/', placeholder: true },
     { label: 'Google Business Profile', href: 'https://www.google.com/business/', placeholder: true },
+    { label: 'Nextdoor', href: 'https://nextdoor.com/', placeholder: true },
   ],
 
   announcement: {
-    text: 'Spring 2027 maintenance routes are filling. Book a free walk-through for Scioto County.',
-    linkLabel: 'Request a quote',
-    href: '/quote',
+    text: 'Fire-season brush clearance is booking now for Ramona and the backcountry.',
+    linkLabel: 'Get on the schedule',
+    href: '/services/brush-clearance',
   },
 
   /** Brand palette. Tailwind utilities are generated from these names. */
   colors: {
-    ink: '#121410', // page background: near-black with a soil undertone
-    loam: '#2A2620', // raised surfaces, cards
-    bone: '#EFE8DA', // primary text on dark, light sections
-    lichen: '#A7AE94', // secondary text, rules
-    clipping: '#D7F25C', // the single bold accent: fresh-cut chartreuse
+    adobe: '#F1E9DB', // canvas: sun-washed stucco
+    chaparral: '#16211B', // ink: deep backcountry green-black
+    sage: '#5D6B52', // secondary text, rules
+    manzanita: '#7A2E1D', // deep red-brown surface, after manzanita bark
+    poppy: '#F25C1E', // the single bold accent: California poppy
   },
 
   fonts: {
-    display: 'Gloock',
-    body: 'Hanken Grotesk',
+    display: 'Bricolage Grotesque',
+    body: 'Instrument Sans',
     googleHref:
-      'https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap',
   },
 
   nav: [
@@ -84,22 +90,21 @@ export const site = {
     { label: 'Work', href: '/gallery' },
     { label: 'Areas', href: '/service-areas' },
     { label: 'About', href: '/about' },
-    { label: 'Journal', href: '/blog' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Field notes', href: '/blog' },
   ],
 
   footerNav: [
     {
-      heading: 'Studio',
+      heading: 'Company',
       links: [
-        { label: 'About', href: '/about' },
+        { label: 'About DC Nova', href: '/about' },
         { label: 'Our work', href: '/gallery' },
         { label: 'Testimonials', href: '/testimonials' },
-        { label: 'Journal', href: '/blog' },
+        { label: 'Field notes', href: '/blog' },
       ],
     },
     {
-      heading: 'Services',
+      heading: 'Lawn care',
       links: [
         { label: 'All services', href: '/services' },
         { label: 'Pricing', href: '/pricing' },
@@ -108,12 +113,12 @@ export const site = {
       ],
     },
     {
-      heading: 'Get in touch',
+      heading: 'Start here',
       links: [
-        { label: 'Request a quote', href: '/quote' },
+        { label: 'Get a quote', href: '/quote' },
         { label: 'Contact', href: '/contact' },
-        { label: 'Privacy', href: '/privacy' },
-        { label: 'Terms', href: '/terms' },
+        { label: 'Privacy policy', href: '/privacy' },
+        { label: 'Terms of service', href: '/terms' },
       ],
     },
   ],
@@ -121,34 +126,31 @@ export const site = {
   formSettings: {
     /**
      * Base URL of the FastAPI backend in backend/. Leave empty here and set
-     * VITE_API_URL at build time (GitHub repo variable / local .env); that
-     * value takes precedence. Quote posts to `${apiUrl}/api/bookings`,
-     * contact posts to `${apiUrl}/api/contacts`.
+     * VITE_API_URL at build time; that value takes precedence. When neither
+     * is set, submitForm() runs as a placeholder and resolves successfully.
      */
     apiUrl: '',
     endpoints: { quote: '/api/bookings', contact: '/api/contacts' },
-    // The free Render plan sleeps when idle; the first request can take ~60s.
     timeoutMs: 75000,
     slowNoticeMs: 6000,
     minMessageLength: 15,
-    replyPromise: 'The owner reads every request personally and replies within one business day.',
+    replyPromise: 'A real person at DC Nova reads every message and replies within one business day.',
   },
 
   /** Trust signals. Everything marked placeholder must be confirmed by the owner. */
   trust: [
-    { key: 'insured', label: 'Licensed & insured', detail: 'Policy details on request', placeholder: true },
-    { key: 'guarantee', label: 'Re-visit guarantee', detail: 'Missed something? We come back free', placeholder: true },
-    { key: 'years', label: '[X] seasons in Scioto County', detail: 'Owner to confirm', placeholder: true },
+    { key: 'insured', label: 'Licensed & insured', detail: 'Certificates on request', placeholder: true },
+    { key: 'guarantee', label: '48-hour re-service promise', detail: 'Missed a spot? We return free', placeholder: true },
+    { key: 'years', label: '[X] years in Ramona', detail: 'Owner to confirm', placeholder: true },
     { key: 'stars', label: '[X.X] ★ average rating', detail: 'Link verified reviews', placeholder: true },
   ],
 
   deploy: {
-    // GitHub Pages project path. The router and 404.html use this to work on
-    // both https://clintonkes.github.io/BDM_Luxe/ and a custom domain root.
-    repoBase: 'BDM_Luxe',
-    githubUrl: 'https://clintonkes.github.io/BDM_Luxe',
-    // Live domain (GitHub Pages custom domain; github.io redirects here).
-    domain: 'https://bdmluxe.com',
+    // GitHub Pages project path. The router and 404.html use this so one build
+    // works on https://clintonkes.github.io/dcnova/ and on the custom domain.
+    repoBase: 'dcnova',
+    githubUrl: 'https://clintonkes.github.io/dcnova',
+    domain: 'https://dcnovallc.com',
   },
 };
 
@@ -157,21 +159,22 @@ export const routes = [
   '/',
   '/about',
   '/services',
-  '/services/weekly-maintenance',
-  '/services/landscape-design',
-  '/services/bed-care',
-  '/services/hardscape',
-  '/services/hedge-shaping',
+  '/services/lawn-mowing',
+  '/services/fertilization-weed-control',
+  '/services/aeration-overseeding',
+  '/services/irrigation',
+  '/services/water-wise-conversions',
+  '/services/brush-clearance',
+  '/services/hedge-shrub-care',
   '/services/seasonal-cleanups',
-  '/services/commercial',
   '/pricing',
   '/gallery',
   '/service-areas',
   '/testimonials',
   '/faq',
   '/blog',
-  '/blog/when-to-start-mowing-in-southern-ohio',
-  '/blog/mulch-depth-and-edging-guide',
+  '/blog/defensible-space-ramona-100-foot-rule',
+  '/blog/watering-schedule-inland-san-diego-lawns',
   '/quote',
   '/contact',
   '/privacy',

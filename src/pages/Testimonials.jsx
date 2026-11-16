@@ -1,78 +1,54 @@
+import { ExternalLink, MessageSquareHeart, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, MessageSquareQuote, PenLine, ShieldCheck } from 'lucide-react';
+import Seo from '@/components/Seo';
+import { Breadcrumbs, CtaBand, Eyebrow, Placeholder, Reveal } from '@/components/ui';
 import { site } from '@/config/site';
 import { testimonials } from '@/data/content';
-import Seo from '@/components/Seo';
-import Reveal from '@/components/Reveal';
-import { CtaBand, Eyebrow, PageHero, Placeholder, Stars } from '@/components/ui';
 
 export default function Testimonials() {
-  const [lead, ...rest] = testimonials;
+  const google = site.social.find((s) => s.label.startsWith('Google'));
   return (
     <>
       <Seo
-        title="Testimonials & Reviews"
-        description="Reviews from BDM Luxe customers across Lucasville and Scioto County. We publish only verified reviews from real customers, with permission."
+        title="Testimonials"
+        description="What homeowners and property managers in Ramona and inland San Diego County say about working with DC Nova lawn care."
       />
-      <PageHero
-        no="T"
-        eyebrow="Testimonials"
-        title={
-          <>
-            Judged by the <span className="italic text-clipping">neighbours.</span>
-          </>
-        }
-        intro="The best review of a lawn is the one a passer-by gives it. Here is what customers say, verified and shared with their permission."
-        aside={
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <Stars />
-            <span className="text-sm text-bone-dim">[X.X] average</span>
-            <Placeholder>Owner to link verified rating</Placeholder>
+
+      <section className="frame pb-14 pt-10 lg:pt-14">
+        <Breadcrumbs items={[{ label: 'Testimonials' }]} />
+        <div className="mt-10 grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Eyebrow>Testimonials</Eyebrow>
+            <h1 className="mt-5 text-[clamp(2.6rem,7vw,5.4rem)] font-extrabold leading-[0.95]">Word travels fast on a small-town route.</h1>
           </div>
-        }
-      />
-
-      <section aria-labelledby="reviews-heading" className="frame py-16 sm:py-24">
-        <h2 id="reviews-heading" className="sr-only">
-          Customer reviews
-        </h2>
-        <div className="mb-10 flex items-start gap-3 border border-dashed border-clipping/40 p-5 text-sm text-bone-dim">
-          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-clipping" aria-hidden="true" />
-          <p>
-            <strong className="text-bone">Review slots awaiting verified reviews.</strong> The cards below show the layout only. Each will be replaced with a
-            real customer review (name or initials, town and service) before publishing. We never invent reviews.
-          </p>
+          <div className="self-end rounded-blob bg-chaparral p-7 text-adobe lg:col-span-5">
+            <div className="flex items-center gap-1 text-poppy" aria-hidden="true">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-6 w-6 fill-current" />
+              ))}
+            </div>
+            <p className="mt-3 font-display text-4xl font-extrabold">[X.X] average</p>
+            <p className="mt-1 text-adobe/75">from [N] verified reviews</p>
+            <Placeholder className="mt-4 text-poppy">Rating: placeholder, link real reviews</Placeholder>
+          </div>
         </div>
+      </section>
 
-        {/* Lead review: oversized quote */}
-        <Reveal as="figure" className="grid gap-8 border-y border-bone/10 py-12 lg:grid-cols-12">
-          <MessageSquareQuote className="h-12 w-12 text-clipping lg:col-span-1" aria-hidden="true" />
-          <blockquote className="font-display text-3xl leading-snug text-bone/75 sm:text-4xl lg:col-span-8">“{lead.quote}”</blockquote>
-          <figcaption className="text-sm lg:col-span-3 lg:text-right">
-            <span className="block font-semibold text-bone">{lead.name}</span>
-            <span className="block text-lichen">{lead.place}</span>
-            <span className="label mt-3 block">{lead.service}</span>
-            <span className="mt-3 inline-block">
-              <Placeholder />
-            </span>
-          </figcaption>
-        </Reveal>
-
-        {/* Ticket grid */}
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {rest.map((t, i) => (
-            <Reveal as="li" key={t.id} delay={(i % 3) * 80}>
-              <figure className={`ticket flex h-full flex-col p-8 ${i === 1 ? 'bg-bone text-ink' : 'bg-loam'}`}>
+      <section className="frame pb-20" aria-label="Customer reviews">
+        <div className="mb-8 rounded-2xl border-2 border-dashed border-manzanita bg-poppy-soft/40 p-4 text-sm">
+          <strong>Note for the owner:</strong> the reviews below are sample placeholders that show the layout. Replace them with real, verified customer reviews (with permission) before launch.
+        </div>
+        <ul className="columns-1 gap-5 md:columns-2 lg:columns-3">
+          {testimonials.map((t, i) => (
+            <Reveal as="li" key={i} delay={(i % 3) * 70} className="mb-5 break-inside-avoid">
+              <figure className={`rounded-blob p-7 ${i % 3 === 1 ? 'bg-manzanita text-adobe' : i % 3 === 2 ? 'bg-adobe-2' : 'border-2 border-chaparral bg-adobe'}`}>
                 <div className="flex items-center justify-between">
-                  <Stars />
-                  <Placeholder />
+                  <span className={`text-xs font-semibold uppercase tracking-label ${i % 3 === 1 ? 'text-poppy-soft' : 'text-manzanita'}`}>{t.service}</span>
+                  <Placeholder className={i % 3 === 1 ? 'text-adobe' : 'text-manzanita'}>Sample</Placeholder>
                 </div>
-                <blockquote className={`mt-6 flex-1 text-lg leading-relaxed ${i === 1 ? 'text-loam' : 'text-bone/70'}`}>“{t.quote}”</blockquote>
-                <figcaption className={`mt-8 border-t border-dashed pt-5 text-sm ${i === 1 ? 'border-ink/25' : 'border-bone/20'}`}>
-                  <span className={`block font-semibold ${i === 1 ? 'text-ink' : 'text-bone'}`}>{t.name}</span>
-                  <span className={i === 1 ? 'text-loam' : 'text-lichen'}>
-                    {t.place} · {t.service}
-                  </span>
+                <blockquote className={`mt-5 font-display font-semibold leading-snug ${i % 2 ? 'text-xl' : 'text-2xl'}`}>“{t.quote}”</blockquote>
+                <figcaption className={`mt-6 text-sm ${i % 3 === 1 ? 'text-adobe/80' : 'text-chaparral/70'}`}>
+                  <span className="font-semibold">{t.name}</span> · {t.place}
                 </figcaption>
               </figure>
             </Reveal>
@@ -80,43 +56,26 @@ export default function Testimonials() {
         </ul>
       </section>
 
-      {/* Leave a review */}
-      <section aria-labelledby="leave-title" className="border-y border-bone/10 bg-ink-2">
-        <div className="frame grid gap-10 py-16 sm:py-20 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-7">
-            <Eyebrow>
-              <span className="inline-flex items-center gap-2">
-                <PenLine className="h-3.5 w-3.5" aria-hidden="true" /> Already a customer?
-              </span>
-            </Eyebrow>
-            <h2 id="leave-title" className="mt-4 text-3xl sm:text-4xl">Tell people what you think.</h2>
-            <p className="mt-4 max-w-xl text-bone-dim">
-              Honest reviews help neighbours decide and tell us what to keep doing. Leave one on our Google profile, or email it and we’ll
-              ask your permission before publishing it here.
-            </p>
+      <section className="border-y-2 border-chaparral bg-adobe-2 py-16">
+        <div className="frame grid items-center gap-8 lg:grid-cols-[auto_1fr_auto]">
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-poppy">
+            <MessageSquareHeart className="h-7 w-7" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 className="text-3xl font-extrabold">Already a client?</h2>
+            <p className="mt-2 text-chaparral/80">A short, honest review helps neighbors find a crew they can trust. It means a lot to a small local company.</p>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row lg:col-span-5 lg:justify-end">
-            <a href={site.social.find((s) => s.label.startsWith('Google'))?.href} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              Review on Google <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              <span className="sr-only">(opens in a new tab)</span>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a href={google.href} target="_blank" rel="noopener noreferrer" className="btn-ink">
+              Leave a Google review <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              <span className="sr-only">(opens in a new tab, placeholder link)</span>
             </a>
-            <a href={`${site.emailHref}?subject=${encodeURIComponent('My BDM Luxe review')}`} className="btn btn-ghost">
-              Email a review
-            </a>
+            <Link to="/contact" className="btn-line">Send private feedback</Link>
           </div>
         </div>
       </section>
 
-      <section className="frame pt-16 text-center">
-        <p className="text-bone-dim">
-          Want to see the work first?{' '}
-          <Link to="/gallery" className="font-semibold text-clipping underline underline-offset-4">
-            Browse the gallery
-          </Link>
-          .
-        </p>
-      </section>
-      <CtaBand />
+      <CtaBand tone="poppy" title="Be the next good review." />
     </>
   );
 }

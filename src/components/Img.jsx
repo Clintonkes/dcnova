@@ -2,14 +2,19 @@ import { useState } from 'react';
 import { sized, srcSet } from '@/lib/img';
 
 /**
- * Lazy, responsive photo. If the image ever fails to load it is replaced by a
- * branded mow-stripe gradient, so the layout never shows a broken image.
+ * Lazy, responsive photo. If an image ever fails to load it is swapped for a
+ * branded sun-and-contour gradient, so the layout never shows a broken image.
  */
 export default function Img({ src, alt, sizes = '100vw', className = '', priority = false, width = 1600, height = 1067, style }) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) {
     return (
-      <div role="img" aria-label={alt} style={style} className={`mow-diag bg-gradient-to-br from-loam via-ink-2 to-ink ${className}`} />
+      <div
+        role="img"
+        aria-label={alt}
+        style={{ ...style, backgroundImage: 'radial-gradient(circle at 70% 30%, #F25C1E 0 12%, transparent 13%), linear-gradient(160deg, #E8DDC9, #DCCEB4 55%, #5D6B52)' }}
+        className={`contours ${className}`}
+      />
     );
   }
   return (
@@ -25,7 +30,7 @@ export default function Img({ src, alt, sizes = '100vw', className = '', priorit
       fetchpriority={priority ? 'high' : undefined}
       onError={() => setFailed(true)}
       style={style}
-      className={`bg-loam object-cover ${className}`}
+      className={`bg-adobe-3 object-cover ${className}`}
     />
   );
 }

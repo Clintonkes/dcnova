@@ -38,3 +38,4 @@ pnpm-debug.log*
 
 # Local-only build brief (kept out of the repo)
 prompt.md
+prompt

@@ -1,31 +1,24 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import { BackToTop, CookieBanner, MobileCallBar, ScrollToTop } from './Chrome';
+import { BackToTop, CookieBanner, MobileCallButton, ScrollManager } from './Chrome';
 import { LocalBusinessSchema } from './Seo';
 
 export default function Layout() {
   const { pathname } = useLocation();
   return (
-    <>
-      <a
-        href="#main"
-        className="cut fixed left-4 top-3 z-[70] -translate-y-24 px-4 py-3 text-sm font-semibold text-ink transition-transform focus:translate-y-0"
-        style={{ '--c': '8px', '--edge': '#D7F25C', '--fill': '#D7F25C' }}
-      >
-        Skip to content
-      </a>
+    <div className="flex min-h-screen flex-col">
       <LocalBusinessSchema />
-      <ScrollToTop />
+      <ScrollManager />
       <Header />
-      {/* Keyed on the path so each page plays the entrance transition. */}
-      <main id="main" tabIndex={-1} key={pathname} className="animate-page-in focus:outline-none">
+      {/* Keyed on the path so each route plays the page-in transition. */}
+      <main id="main" tabIndex={-1} key={pathname} className="flex-1 animate-rise outline-none">
         <Outlet />
       </main>
       <Footer />
-      <MobileCallBar />
+      <MobileCallButton />
       <BackToTop />
       <CookieBanner />
-    </>
+    </div>
   );
 }

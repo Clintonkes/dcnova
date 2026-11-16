@@ -1,97 +1,94 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Expand } from 'lucide-react';
-import { gallery, galleryCategories } from '@/data/content';
 import Seo from '@/components/Seo';
 import Img from '@/components/Img';
 import Lightbox from '@/components/Lightbox';
-import { CtaBand, PageHero, Placeholder } from '@/components/ui';
+import { Breadcrumbs, CtaBand, Eyebrow, Reveal } from '@/components/ui';
+import { gallery, galleryCategories } from '@/data/content';
 
 export default function Gallery() {
   const [filter, setFilter] = useState('All');
   const [open, setOpen] = useState(null);
   const items = useMemo(() => (filter === 'All' ? gallery : gallery.filter((g) => g.category === filter)), [filter]);
+  const close = useCallback(() => setOpen(null), []);
+  const count = (c) => (c === 'All' ? gallery.length : gallery.filter((g) => g.category === c).length);
 
   return (
     <>
       <Seo
-        title="Gallery: Lawns, Beds, Hedges & Hardscape"
-        description="A visual reference for the finish BDM Luxe works toward: striped lawns, spade-cut beds, shaped hedges, stone paths and clean autumn properties in southern Ohio."
-      />
-      <PageHero
-        no="G"
-        eyebrow="Gallery"
-        title={
-          <>
-            The finish, <span className="italic text-clipping">in pictures.</span>
-          </>
-        }
-        intro="Filter by type of work and open any image full-screen. Use the arrow keys to move between photos."
-        aside={
-          <p className="mt-5 flex flex-wrap items-center gap-2 text-xs text-lichen">
-            <Placeholder>Representative photography</Placeholder> Owner’s project photos to replace.
-          </p>
-        }
+        title="Our Work"
+        description="A gallery of lawn care, water-wise planting, irrigation, brush clearance, hedge and cleanup work of the kind DC Nova does across Ramona and inland San Diego County."
       />
 
-      <section aria-labelledby="gallery-grid" className="frame py-12 sm:py-16">
-        <h2 id="gallery-grid" className="sr-only">
-          Photo grid
-        </h2>
-        <div role="group" aria-label="Filter photos by category" className="sticky top-24 z-30 -mx-4 flex gap-2 overflow-x-auto bg-ink/90 px-4 py-3 backdrop-blur sm:mx-0 sm:flex-wrap sm:overflow-visible sm:bg-transparent sm:px-0 sm:backdrop-blur-none">
-          {galleryCategories.map((c) => {
-            const count = c === 'All' ? gallery.length : gallery.filter((g) => g.category === c).length;
-            const active = filter === c;
-            return (
+      <section className="frame pb-10 pt-10 lg:pt-14">
+        <Breadcrumbs items={[{ label: 'Work' }]} />
+        <div className="mt-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div>
+            <Eyebrow>Gallery</Eyebrow>
+            <h1 className="mt-5 text-[clamp(2.6rem,7vw,5.4rem)] font-extrabold leading-[0.95]">The work, up close.</h1>
+          </div>
+          <p className="max-w-md text-chaparral/80">
+            Filter by type of work, then open any photo full-size. These are representative photos; DC Nova job photos will replace them as projects are completed.
+          </p>
+        </div>
+      </section>
+
+      <div className="sticky top-[5.5rem] z-30 border-y-2 border-chaparral bg-adobe/95 backdrop-blur">
+        <div className="frame">
+          <div role="group" aria-label="Filter photos by category" className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 py-3">
+            {galleryCategories.map((c) => (
               <button
                 key={c}
                 type="button"
-                aria-pressed={active}
+                aria-pressed={filter === c}
                 onClick={() => setFilter(c)}
-                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
-                  active ? 'border-clipping bg-clipping text-ink' : 'border-bone/20 text-bone-dim hover:border-bone/50 hover:text-bone'
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition ${
+                  filter === c ? 'border-chaparral bg-chaparral text-adobe' : 'border-chaparral/25 hover:border-chaparral'
                 }`}
               >
-                {c} <span className={active ? 'text-ink/60' : 'text-lichen'}>{count}</span>
+                {c}
+                <span className={`rounded-full px-1.5 text-xs tabular-nums ${filter === c ? 'bg-poppy text-chaparral' : 'bg-adobe-2'}`}>{count(c)}</span>
               </button>
-            );
-          })}
+            ))}
+          </div>
         </div>
-        <p className="sr-only" aria-live="polite">
-          Showing {items.length} photos{filter !== 'All' ? ` in ${filter}` : ''}.
-        </p>
+      </div>
 
-        <ul className="mt-8 columns-1 gap-4 sm:columns-2 lg:columns-3">
+      <section className="frame py-12 lg:py-16" aria-label={`${filter} photos`}>
+        <p className="sr-only" aria-live="polite">Showing {items.length} photos</p>
+        <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3">
           {items.map((g, i) => (
-            <li key={g.id} className="mb-4 break-inside-avoid animate-page-in" style={{ animationDelay: `${Math.min(i, 8) * 40}ms` }}>
+            <Reveal as="li" key={g.id} delay={(i % 3) * 60} className="mb-4 break-inside-avoid">
               <button
                 type="button"
                 onClick={() => setOpen(i)}
-                className="group relative block w-full overflow-hidden text-left"
+                className="group relative block w-full overflow-hidden rounded-blob border-2 border-chaparral text-left"
                 aria-label={`Open photo: ${g.title}`}
               >
                 <Img
                   src={g.src}
                   alt={g.alt}
-                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-                  className={`w-full transition-transform duration-700 group-hover:scale-[1.04] ${i % 3 === 1 ? 'aspect-[4/5]' : i % 4 === 0 ? 'aspect-[4/3]' : 'aspect-square'}`}
+                  sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 92vw"
+                  className={`w-full transition duration-700 group-hover:scale-105 ${['aspect-[4/5]', 'aspect-[4/3]', 'aspect-square'][i % 3]}`}
                 />
-                <span className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/0 to-transparent opacity-80 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
+                <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-chaparral/90 to-transparent p-4 pt-16 text-adobe">
                   <span>
-                    <span className="label block !text-clipping">{g.category}</span>
-                    <span className="mt-1 block font-display text-xl text-bone">{g.title}</span>
+                    <span className="block text-xs font-semibold uppercase tracking-label text-poppy">{g.category}</span>
+                    <span className="font-display text-lg font-bold">{g.title}</span>
                   </span>
-                  <Expand className="h-5 w-5 shrink-0 text-bone opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true" />
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-adobe text-chaparral opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+                    <Expand className="h-4 w-4" aria-hidden="true" />
+                  </span>
                 </span>
               </button>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </section>
 
-      {open !== null && <Lightbox items={items} index={open} onIndex={setOpen} onClose={() => setOpen(null)} />}
+      {open !== null && <Lightbox items={items} index={open} onClose={close} onIndex={setOpen} />}
 
-      <CtaBand title="Picture this on your property." />
+      <CtaBand title="Want your yard in here?" />
     </>
   );
 }
