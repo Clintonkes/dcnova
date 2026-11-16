@@ -136,8 +136,8 @@ export const services = [
     name: 'Brush clearance & defensible space',
     short: 'Fire safety',
     icon: Flame,
-    image: pexels(18027616),
-    alt: 'Rolling golden hills dotted with oak trees in late evening light',
+    image: pexels(7546775),
+    alt: 'Wide green lawn beside a single-storey home and covered patio',
     summary: 'Cutting dry grass and brush, limbing trees and clearing debris to create defensible space around your home.',
     intro:
       'Ramona sits in wildfire country, and defensible space is one of the most effective protections a home has. We work from current CAL FIRE guidance: keep the first 30 feet lean, clean and green, and reduce fuel out to 100 feet. We use tools and timing that keep sparks off dry grass.',

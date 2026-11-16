@@ -1,10 +1,9 @@
-import { BadgeCheck, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import Seo from '@/components/Seo';
 import Img from '@/components/Img';
-import { Mark } from '@/components/Logo';
 import { Arch, Breadcrumbs, CtaBand, Eyebrow, Placeholder, Reveal, SectionHead, Spark, TrustBar } from '@/components/ui';
 import { site } from '@/config/site';
-import { credentials, team, values } from '@/data/content';
+import { values } from '@/data/content';
 import { pexels } from '@/lib/img';
 
 export default function About() {
@@ -12,7 +11,7 @@ export default function About() {
     <>
       <Seo
         title="About"
-        description="DC Nova LLC is a Ramona, California lawn care company built around water-wise care and fire-season readiness. Meet the team and see our credentials."
+        description="DC Nova LLC is a Ramona, California lawn care company built around water-wise care and fire-season readiness. Learn how we approach every property."
       />
 
       {/* Story: typographic opener over a full-width landscape */}
@@ -75,52 +74,6 @@ export default function About() {
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="frame py-20 lg:py-28" aria-labelledby="team-h">
-        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-          <SectionHead eyebrow="The crew" title={<span id="team-h">People you’ll see on your property</span>} />
-          <Placeholder className="text-manzanita">Names, bios and photos: owner to supply</Placeholder>
-        </div>
-        <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {team.map((m, i) => (
-            <Reveal as="li" key={m.role} delay={i * 90}>
-              <Arch className="relative grid aspect-[4/5] place-items-center border-2 border-chaparral bg-adobe-2">
-                <div className="contours absolute inset-0" aria-hidden="true" />
-                <Mark className="relative h-24 w-24 text-chaparral" />
-                <span className="sr-only">Portrait placeholder</span>
-              </Arch>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-label text-manzanita">{m.role}</p>
-              <h3 className="mt-1 text-2xl font-bold">{m.name}</h3>
-              <p className="mt-2 text-chaparral/75">{m.bio}</p>
-            </Reveal>
-          ))}
-        </ul>
-      </section>
-
-      {/* Credentials */}
-      <section className="on-dark bg-chaparral py-20 text-adobe lg:py-28" aria-labelledby="cred-h">
-        <div className="frame grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHead light eyebrow="Credentials" title={<span id="cred-h">Paperwork, in the open</span>} titleClass="text-4xl sm:text-5xl" />
-            <p className="mt-5 text-adobe/75">
-              Ask for any certificate before we start. Each item below is marked as a placeholder until the owner confirms the policy or license details.
-            </p>
-          </div>
-          <ul className="divide-y divide-adobe/15 border-y border-adobe/15 lg:col-span-8">
-            {credentials.map((c) => (
-              <li key={c.title} className="grid gap-2 py-6 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-6">
-                <BadgeCheck className="h-6 w-6 text-poppy" aria-hidden="true" />
-                <div>
-                  <h3 className="font-sans text-lg font-semibold">{c.title}</h3>
-                  <p className="text-adobe/70">{c.detail}</p>
-                </div>
-                <span className="chip-placeholder w-fit text-poppy">{c.status}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 

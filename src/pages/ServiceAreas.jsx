@@ -30,7 +30,7 @@ export default function ServiceAreas() {
       />
 
       <section className="on-dark relative overflow-hidden bg-chaparral text-adobe">
-        <Img src={pexels(18027616)} alt="" className="absolute inset-0 h-full w-full opacity-35" priority />
+        <Img src={pexels(7546775)} alt="" className="absolute inset-0 h-full w-full opacity-35" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-chaparral via-chaparral/85 to-chaparral/30" aria-hidden="true" />
         <div className="frame relative pb-20 pt-10 lg:pb-28 lg:pt-14">
           <Breadcrumbs light items={[{ label: 'Service areas' }]} />

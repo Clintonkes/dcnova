@@ -5,7 +5,7 @@ export const gallery = [
   { id: 'mower', src: pexels(4162011), category: 'Mowing', title: 'Weekly cut, sharp blade', alt: 'Red walk-behind mower resting on a dense, freshly cut lawn' },
   { id: 'lawn-detail', src: pexels(7546775), category: 'Water-wise', title: 'Healthy turf, smarter watering', alt: 'Wide green lawn beside a single-storey home and covered patio' },
   { id: 'sprinkler', src: pexels(25283561), category: 'Irrigation', title: 'Re-aimed pop-up spray', alt: 'Pop-up sprinkler spraying a fan of water across green grass' },
-  { id: 'hills', src: pexels(18027616), category: 'Fire safety', title: 'Oak-dotted hillside', alt: 'Rolling golden hills dotted with oak trees in late evening light' },
+  { id: 'hills', src: pexels(7546775), category: 'Fire safety', title: 'Green property edge', alt: 'Wide green lawn beside a single-storey home and covered patio' },
   { id: 'stripes', src: pexels(280222), category: 'Mowing', title: 'Front lawn, even colour', alt: 'Bright, evenly striped front lawn in front of a white house under blue sky' },
   { id: 'hedge', src: pexels(38936349), category: 'Hedges & shrubs', title: 'Hand-shaped hedge', alt: 'Gardener in workwear trimming a dense green hedge with long-handled shears' },
   { id: 'green-edge', src: pexels(4162011), category: 'Water-wise', title: 'Green edge, clean finish', alt: 'Dense green lawn being maintained with a walk-behind mower' },
