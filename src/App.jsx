@@ -12,8 +12,6 @@ const Gallery = lazy(() => import('@/pages/Gallery'));
 const ServiceAreas = lazy(() => import('@/pages/ServiceAreas'));
 const Testimonials = lazy(() => import('@/pages/Testimonials'));
 const Faq = lazy(() => import('@/pages/Faq'));
-const Blog = lazy(() => import('@/pages/Blog'));
-const BlogPost = lazy(() => import('@/pages/BlogPost'));
 const Quote = lazy(() => import('@/pages/Quote'));
 const Contact = lazy(() => import('@/pages/Contact'));
 const Privacy = lazy(() => import('@/pages/Privacy'));
@@ -42,8 +40,6 @@ export default function App() {
         <Route path="service-areas" element={<Lazy el={<ServiceAreas />} />} />
         <Route path="testimonials" element={<Lazy el={<Testimonials />} />} />
         <Route path="faq" element={<Lazy el={<Faq />} />} />
-        <Route path="blog" element={<Lazy el={<Blog />} />} />
-        <Route path="blog/:slug" element={<Lazy el={<BlogPost />} />} />
         <Route path="quote" element={<Lazy el={<Quote />} />} />
         <Route path="contact" element={<Lazy el={<Contact />} />} />
         <Route path="privacy" element={<Lazy el={<Privacy />} />} />

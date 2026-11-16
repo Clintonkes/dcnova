@@ -360,7 +360,7 @@ export default function Quote() {
               </ol>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Link to="/" className="btn-ink">Back to home</Link>
-                <Link to="/blog" className="btn-line">Read field notes</Link>
+                <Link to="/gallery" className="btn-line">See our work</Link>
               </div>
             </div>
           </div>

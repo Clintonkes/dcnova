@@ -10,12 +10,12 @@ export default {
       colors: {
         ...site.colors,
         // Tints derived from the brand palette for surfaces, borders and states.
-        'adobe-2': '#E8DDC9',
-        'adobe-3': '#DCCEB4',
-        'chaparral-2': '#22302A',
-        'poppy-soft': '#FBD9C6',
-        line: '#CBBDA3',
-        alert: '#A3260F',
+        'adobe-2': '#E4EBD7',
+        'adobe-3': '#D2DFC3',
+        'chaparral-2': '#254A2E',
+        'poppy-soft': '#EAF0C9',
+        line: '#BFCDAE',
+        alert: '#9B3B22',
       },
       fontFamily: {
         display: [`"${site.fonts.display}"`, 'ui-sans-serif', 'system-ui', 'sans-serif'],

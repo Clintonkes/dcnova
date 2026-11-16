@@ -3,21 +3,20 @@ import { pexels } from '@/lib/img';
 /** Representative photography (verified Pexels images), not DC Nova job photos. */
 export const gallery = [
   { id: 'mower', src: pexels(4162011), category: 'Mowing', title: 'Weekly cut, sharp blade', alt: 'Red walk-behind mower resting on a dense, freshly cut lawn' },
-  { id: 'aloe', src: pexels(374934), category: 'Water-wise', title: 'Aloe and cactus border', alt: 'Red-tipped aloes with tall flower spikes in front of columnar cactus in a sunny garden' },
+  { id: 'lawn-detail', src: pexels(7546775), category: 'Water-wise', title: 'Healthy turf, smarter watering', alt: 'Wide green lawn beside a single-storey home and covered patio' },
   { id: 'sprinkler', src: pexels(25283561), category: 'Irrigation', title: 'Re-aimed pop-up spray', alt: 'Pop-up sprinkler spraying a fan of water across green grass' },
   { id: 'hills', src: pexels(18027616), category: 'Fire safety', title: 'Oak-dotted hillside', alt: 'Rolling golden hills dotted with oak trees in late evening light' },
   { id: 'stripes', src: pexels(280222), category: 'Mowing', title: 'Front lawn, even colour', alt: 'Bright, evenly striped front lawn in front of a white house under blue sky' },
   { id: 'hedge', src: pexels(38936349), category: 'Hedges & shrubs', title: 'Hand-shaped hedge', alt: 'Gardener in workwear trimming a dense green hedge with long-handled shears' },
-  { id: 'succulents', src: pexels(1903970), category: 'Water-wise', title: 'Succulent groundcover', alt: 'Overhead view of a dense bed of blue-grey and pink rosette succulents' },
+  { id: 'green-edge', src: pexels(4162011), category: 'Water-wise', title: 'Green edge, clean finish', alt: 'Dense green lawn being maintained with a walk-behind mower' },
   { id: 'trim', src: pexels(11364122), category: 'Fire safety', title: 'Trimming to 4 inches', alt: 'String trimmer line cutting grass close to the ground along a paved edge' },
   { id: 'blower', src: pexels(9620215), category: 'Cleanups', title: 'Fall leaf clearance', alt: 'Worker in a red jacket using a backpack leaf blower to clear fallen leaves' },
   { id: 'rotor', src: pexels(32974053), category: 'Irrigation', title: 'Rotor head check', alt: 'Close-up of a lawn sprinkler head throwing a jet of water across short green turf' },
   { id: 'pool', src: pexels(8143675), category: 'Mowing', title: 'Poolside lawn', alt: 'Manicured lawn with a single young tree beside a swimming pool and brick house' },
   { id: 'shears', src: pexels(38936344), category: 'Hedges & shrubs', title: 'Flat-top finish', alt: 'Hands guiding orange-handled hedge shears across a flat-topped hedge' },
-  { id: 'rockplant', src: pexels(6421982), category: 'Water-wise', title: 'Gravel garden detail', alt: 'Broad-leaved succulent growing among white rocks and dry grasses' },
+  { id: 'watered-turf', src: pexels(25283561), category: 'Water-wise', title: 'Water where the lawn needs it', alt: 'Pop-up sprinkler spraying an even fan of water across green turf' },
   { id: 'leaves', src: pexels(20805905), category: 'Cleanups', title: 'Wind debris cleanup', alt: 'Leaves flying from a blower as a worker clears a wooded garden' },
   { id: 'golden', src: pexels(6728925), category: 'Mowing', title: 'Golden-hour lawn', alt: 'Low view across sunlit grass toward a push mower in warm evening light' },
-  { id: 'arbor', src: pexels(4920288), category: 'Hedges & shrubs', title: 'Screen-row trim', alt: 'Groundskeeper with a string trimmer beside a row of tall arborvitae' },
 ];
 
 export const galleryCategories = ['All', ...Array.from(new Set(gallery.map((g) => g.category)))];

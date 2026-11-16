@@ -70,11 +70,11 @@ export const site = {
 
   /** Brand palette. Tailwind utilities are generated from these names. */
   colors: {
-    adobe: '#F1E9DB', // canvas: sun-washed stucco
-    chaparral: '#16211B', // ink: deep backcountry green-black
-    sage: '#5D6B52', // secondary text, rules
-    manzanita: '#7A2E1D', // deep red-brown surface, after manzanita bark
-    poppy: '#F25C1E', // the single bold accent: California poppy
+    adobe: '#F2F5E8', // canvas: soft lawn green
+    chaparral: '#17351F', // ink: deep turf green
+    sage: '#5C7A4C', // secondary text, rules
+    manzanita: '#6D5130', // warm soil accent
+    poppy: '#B8C94A', // fresh grass accent
   },
 
   fonts: {
@@ -90,7 +90,6 @@ export const site = {
     { label: 'Work', href: '/gallery' },
     { label: 'Areas', href: '/service-areas' },
     { label: 'About', href: '/about' },
-    { label: 'Field notes', href: '/blog' },
   ],
 
   footerNav: [
@@ -100,7 +99,6 @@ export const site = {
         { label: 'About DC Nova', href: '/about' },
         { label: 'Our work', href: '/gallery' },
         { label: 'Testimonials', href: '/testimonials' },
-        { label: 'Field notes', href: '/blog' },
       ],
     },
     {
@@ -172,9 +170,6 @@ export const routes = [
   '/service-areas',
   '/testimonials',
   '/faq',
-  '/blog',
-  '/blog/defensible-space-ramona-100-foot-rule',
-  '/blog/watering-schedule-inland-san-diego-lawns',
   '/quote',
   '/contact',
   '/privacy',

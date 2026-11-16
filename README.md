@@ -10,7 +10,7 @@ Marketing site for **DC Nova LLC**, a lawn care company at 1512 San Vicente Rd, 
 | | |
 | --- | --- |
 | Identity | Sun-country groundskeeping: water-wise, fire-aware lawn care for the Ramona backcountry |
-| Palette | Adobe `#F1E9DB` · Chaparral `#16211B` · Sage `#5D6B52` · Manzanita `#7A2E1D` · **Poppy `#F25C1E`** (accent) |
+| Palette | Adobe `#F2F5E8` · Chaparral `#17351F` · Sage `#5C7A4C` · Soil `#6D5130` · **Lawn `#B8C94A`** (accent) |
 | Type | Bricolage Grotesque (display) + Instrument Sans (body) |
 | Layout | Editorial · floating pill nav · asymmetric hero · organic shapes (arch frames, pill buttons) |
 | Motif | Topographic contour lines + the four-point “nova spark” (bullets, dividers, loader) |
@@ -23,7 +23,6 @@ Marketing site for **DC Nova LLC**, a lawn care company at 1512 San Vicente Rd, 
 | Business details, colours, fonts, nav, hours, service areas, trust signals, form settings | `src/config/site.js` (read by Tailwind and Vite too) |
 | Services (cards and `/services/:slug` detail pages) | `src/data/services.js` |
 | Gallery, testimonials, FAQ, team, credentials, pricing plans | `src/data/content.js` |
-| Field notes (blog posts) | `src/data/posts.jsx` |
 | Form submission (the single submit function) | `src/lib/submitForm.js` |
 
 ## Before launch: placeholders to replace
@@ -42,7 +41,7 @@ The photos are verified Pexels images used as representative photography until D
 
 ## Routes
 
-`/`, `/about`, `/services`, `/services/:slug` (8 services), `/pricing`, `/gallery`, `/service-areas`, `/testimonials`, `/faq`, `/blog`, `/blog/:slug` (2 posts), `/quote`, `/contact`, `/privacy`, `/terms`, and a custom 404. `sitemap.xml` and `robots.txt` are generated at build time from the `routes` list in `src/config/site.js`.
+`/`, `/about`, `/services`, `/services/:slug` (8 services), `/pricing`, `/gallery`, `/service-areas`, `/testimonials`, `/faq`, `/quote`, `/contact`, `/privacy`, `/terms`, and a custom 404. `sitemap.xml` and `robots.txt` are generated at build time from the `routes` list in `src/config/site.js`.
 
 ## Forms
 

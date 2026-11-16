@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Seo from '@/components/Seo';
 import { Breadcrumbs, Eyebrow } from '@/components/ui';
-import { formatDate } from '@/data/posts';
+import { formatDate } from '@/lib/date';
 
 /** Shared layout for Privacy and Terms: sticky table of contents + article. */
 export default function Legal({ title, description, updated, sections, intro }) {

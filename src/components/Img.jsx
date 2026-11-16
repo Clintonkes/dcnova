@@ -12,7 +12,7 @@ export default function Img({ src, alt, sizes = '100vw', className = '', priorit
       <div
         role="img"
         aria-label={alt}
-        style={{ ...style, backgroundImage: 'radial-gradient(circle at 70% 30%, #F25C1E 0 12%, transparent 13%), linear-gradient(160deg, #E8DDC9, #DCCEB4 55%, #5D6B52)' }}
+        style={{ ...style, backgroundImage: 'radial-gradient(circle at 70% 30%, #B8C94A 0 12%, transparent 13%), linear-gradient(160deg, #E4EBD7, #D2DFC3 55%, #5C7A4C)' }}
         className={`contours ${className}`}
       />
     );
