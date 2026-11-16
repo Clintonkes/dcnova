@@ -12,7 +12,7 @@ export default function Footer() {
       {/* Ridge line: the contour motif at the top of the footer */}
       <svg viewBox="0 0 1440 80" preserveAspectRatio="none" className="block h-12 w-full text-adobe sm:h-16" aria-hidden="true">
         <path d="M0 0h1440v34c-120 26-240 40-380 22S820 2 680 12 420 64 280 62 80 30 0 40Z" fill="currentColor" />
-        <path d="M0 52c80-10 200 18 300 18s240-46 380-52 260 40 380 46 260-12 380-30" fill="none" stroke="#F25C1E" strokeWidth="2" />
+        <path d="M0 52c80-10 200 18 300 18s240-46 380-52 260 40 380 46 260-12 380-30" fill="none" stroke="#D4A64A" strokeWidth="2" />
       </svg>
 
       <div className="frame relative grid gap-12 pb-10 pt-10 lg:grid-cols-12 lg:pt-14">

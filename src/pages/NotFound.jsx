@@ -41,16 +41,16 @@ export default function NotFound() {
           </div>
           {/* Illustration: bare-soil "404" with a single sprout */}
           <svg viewBox="0 0 400 300" className="mx-auto w-full max-w-lg" role="img" aria-label="Illustration of the number 404 drawn as soil mounds with a small sprout">
-            <ellipse cx="200" cy="262" rx="190" ry="18" fill="#DCCEB4" />
-            <text x="200" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#16211B" letterSpacing="-8">0</text>
-            <text x="58" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#7A2E1D" letterSpacing="-8">4</text>
-            <text x="342" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#7A2E1D" letterSpacing="-8">4</text>
+            <ellipse cx="200" cy="262" rx="190" ry="18" fill="#DFD4BF" />
+            <text x="200" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#182B3A" letterSpacing="-8">0</text>
+            <text x="58" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#7A5A2C" letterSpacing="-8">4</text>
+            <text x="342" y="230" textAnchor="middle" fontFamily="Bricolage Grotesque, sans-serif" fontWeight="800" fontSize="170" fill="#7A5A2C" letterSpacing="-8">4</text>
             <g transform="translate(200 72)">
-              <path d="M0 40V0" stroke="#5D6B52" strokeWidth="5" strokeLinecap="round" />
-              <path d="M0 14C-4 0-18-6-30-2c4 12 18 18 30 2Z" fill="#5D6B52" />
-              <path d="M0 6C4-8 18-14 30-10c-4 12-18 18-30 4Z" fill="#5D6B52" />
+              <path d="M0 40V0" stroke="#536B7A" strokeWidth="5" strokeLinecap="round" />
+              <path d="M0 14C-4 0-18-6-30-2c4 12 18 18 30 2Z" fill="#536B7A" />
+              <path d="M0 6C4-8 18-14 30-10c-4 12-18 18-30 4Z" fill="#536B7A" />
             </g>
-            <path d="M200 12 204 26 218 30 204 34 200 48 196 34 182 30 196 26Z" fill="#F25C1E" />
+            <path d="M200 12 204 26 218 30 204 34 200 48 196 34 182 30 196 26Z" fill="#D4A64A" />
           </svg>
         </div>
       </section>

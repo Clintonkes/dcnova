@@ -10,11 +10,11 @@ export default {
       colors: {
         ...site.colors,
         // Tints derived from the brand palette for surfaces, borders and states.
-        'adobe-2': '#E4EBD7',
-        'adobe-3': '#D2DFC3',
-        'chaparral-2': '#254A2E',
-        'poppy-soft': '#EAF0C9',
-        line: '#BFCDAE',
+        'adobe-2': '#EDE6D8',
+        'adobe-3': '#DFD4BF',
+        'chaparral-2': '#263F52',
+        'poppy-soft': '#F4E5BD',
+        line: '#CFC2A7',
         alert: '#9B3B22',
       },
       fontFamily: {

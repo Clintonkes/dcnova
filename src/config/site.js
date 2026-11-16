@@ -70,11 +70,11 @@ export const site = {
 
   /** Brand palette. Tailwind utilities are generated from these names. */
   colors: {
-    adobe: '#F2F5E8', // canvas: soft lawn green
-    chaparral: '#17351F', // ink: deep turf green
-    sage: '#5C7A4C', // secondary text, rules
-    manzanita: '#6D5130', // warm soil accent
-    poppy: '#B8C94A', // fresh grass accent
+    adobe: '#F6F1E8', // canvas: warm cream
+    chaparral: '#182B3A', // ink: deep navy
+    sage: '#536B7A', // secondary text, rules
+    manzanita: '#7A5A2C', // sun-warmed ochre
+    poppy: '#D4A64A', // golden accent
   },
 
   fonts: {

@@ -10,7 +10,7 @@ Marketing site for **DC Nova LLC**, a lawn care company at 1512 San Vicente Rd, 
 | | |
 | --- | --- |
 | Identity | Sun-country groundskeeping: water-wise, fire-aware lawn care for the Ramona backcountry |
-| Palette | Adobe `#F2F5E8` · Chaparral `#17351F` · Sage `#5C7A4C` · Soil `#6D5130` · **Lawn `#B8C94A`** (accent) |
+| Palette | Cream `#F6F1E8` · Navy `#182B3A` · Slate `#536B7A` · Ochre `#7A5A2C` · **Sun `#D4A64A`** (accent) |
 | Type | Bricolage Grotesque (display) + Instrument Sans (body) |
 | Layout | Editorial · floating pill nav · asymmetric hero · organic shapes (arch frames, pill buttons) |
 | Motif | Topographic contour lines + the four-point “nova spark” (bullets, dividers, loader) |

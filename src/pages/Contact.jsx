@@ -18,20 +18,20 @@ function MapPlaceholder() {
   return (
     <div className="relative overflow-hidden rounded-blob border-2 border-chaparral bg-adobe-2">
       <svg viewBox="0 0 400 260" className="block h-auto w-full" role="img" aria-label={`Stylized map placeholder showing ${a.street}, ${a.city}`}>
-        <rect width="400" height="260" fill="#E8DDC9" />
-        <g fill="none" stroke="#16211B" strokeOpacity=".12" strokeWidth="1.2">
+        <rect width="400" height="260" fill="#EDE6D8" />
+        <g fill="none" stroke="#182B3A" strokeOpacity=".12" strokeWidth="1.2">
           {Array.from({ length: 9 }).map((_, i) => (
             <path key={i} d={`M-10 ${40 + i * 26}c70-30 120-40 190-18s120 32 230-10`} />
           ))}
         </g>
-        <path d="M0 150 C80 140 140 120 200 128 S320 160 400 140" stroke="#F1E9DB" strokeWidth="14" fill="none" />
-        <path d="M0 150 C80 140 140 120 200 128 S320 160 400 140" stroke="#5D6B52" strokeWidth="1.5" strokeDasharray="8 8" fill="none" />
-        <path d="M210 0 C205 60 200 100 200 128 S196 200 186 260" stroke="#F1E9DB" strokeWidth="10" fill="none" />
-        <text x="18" y="140" fontSize="11" fontWeight="600" fill="#16211B" opacity=".7">Main St / SR-67</text>
-        <text x="216" y="40" fontSize="11" fontWeight="600" fill="#16211B" opacity=".7">San Vicente Rd</text>
-        <circle cx="203" cy="160" r="22" fill="#F25C1E" opacity=".25" />
-        <path d="M203 168c-10-12-16-20-16-28a16 16 0 1 1 32 0c0 8-6 16-16 28Z" fill="#16211B" />
-        <circle cx="203" cy="140" r="6" fill="#F25C1E" />
+        <path d="M0 150 C80 140 140 120 200 128 S320 160 400 140" stroke="#F6F1E8" strokeWidth="14" fill="none" />
+        <path d="M0 150 C80 140 140 120 200 128 S320 160 400 140" stroke="#536B7A" strokeWidth="1.5" strokeDasharray="8 8" fill="none" />
+        <path d="M210 0 C205 60 200 100 200 128 S196 200 186 260" stroke="#F6F1E8" strokeWidth="10" fill="none" />
+        <text x="18" y="140" fontSize="11" fontWeight="600" fill="#182B3A" opacity=".7">Main St / SR-67</text>
+        <text x="216" y="40" fontSize="11" fontWeight="600" fill="#182B3A" opacity=".7">San Vicente Rd</text>
+        <circle cx="203" cy="160" r="22" fill="#D4A64A" opacity=".25" />
+        <path d="M203 168c-10-12-16-20-16-28a16 16 0 1 1 32 0c0 8-6 16-16 28Z" fill="#182B3A" />
+        <circle cx="203" cy="140" r="6" fill="#D4A64A" />
       </svg>
       <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-adobe/95 p-3 text-sm">
         <span className="font-semibold">{a.street}, {a.city}</span>
