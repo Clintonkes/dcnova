@@ -195,7 +195,7 @@ function Process() {
 }
 
 function GalleryTeaser() {
-  const picks = ['aloe', 'mower', 'hills', 'sprinkler', 'hedge'].map((id) => gallery.find((g) => g.id === id));
+  const picks = ['lawn-detail', 'mower', 'hills', 'sprinkler', 'hedge'].map((id) => gallery.find((g) => g.id === id));
   return (
     <section className="bg-adobe-2 py-20 lg:py-28" aria-labelledby="work-h">
       <div className="frame">
